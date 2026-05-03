@@ -90,7 +90,7 @@ export function filterMusic(items: MusicItem[], query: MusicQuery): MusicItem[] 
       }
       return true;
     })
-    .sort((left, right) => Date.parse(right.releaseDate ?? "1970-01-01") - Date.parse(left.releaseDate ?? "1970-01-01"));
+    .sort((left, right) => compareMusicItems(left, right, qTerms));
 }
 
 function expandMusicQuery(value: string): string[] {
@@ -100,4 +100,44 @@ function expandMusicQuery(value: string): string[] {
     Object.entries(MUSIC_QUERY_ALIASES).find(([key]) => normalizeSearchText(key) === normalized)?.[1] ??
     [];
   return [...new Set([normalized, ...aliases.map((alias) => normalizeSearchText(alias))].filter(Boolean))];
+}
+
+function compareMusicItems(left: MusicItem, right: MusicItem, qTerms: string[]): number {
+  if (qTerms.length > 0) {
+    const scoreDiff = musicQueryScore(right, qTerms) - musicQueryScore(left, qTerms);
+    if (scoreDiff !== 0) return scoreDiff;
+
+    if (hasExactTitleMatch(left, qTerms) && hasExactTitleMatch(right, qTerms)) {
+      return Date.parse(left.releaseDate ?? "9999-12-31") - Date.parse(right.releaseDate ?? "9999-12-31");
+    }
+  }
+
+  return Date.parse(right.releaseDate ?? "1970-01-01") - Date.parse(left.releaseDate ?? "1970-01-01");
+}
+
+function musicQueryScore(item: MusicItem, qTerms: string[]): number {
+  const title = normalizeSearchText(item.title);
+  const album = normalizeSearchText(item.albumTitle);
+  const artist = normalizeSearchText(item.artist ?? "");
+  const source = normalizeSearchText(item.source);
+  const series = item.series.map((value) => normalizeSearchText(value)).join("|");
+  const haystack = [item.id, title, album, artist, source, item.sourceUrl, series].filter(Boolean).join("|");
+  let score = 0;
+
+  for (const term of qTerms) {
+    if (title === term) score = Math.max(score, 100);
+    else if (title.includes(term)) score = Math.max(score, 80);
+    else if (album.includes(term)) score = Math.max(score, 50);
+    else if (artist.includes(term)) score = Math.max(score, 40);
+    else if (haystack.includes(term)) score = Math.max(score, 10);
+  }
+
+  if (item.coverUrl) score += 3;
+  if (item.releaseDate) score += 1;
+  return score;
+}
+
+function hasExactTitleMatch(item: MusicItem, qTerms: string[]): boolean {
+  const title = normalizeSearchText(item.title);
+  return qTerms.some((term) => title === term);
 }

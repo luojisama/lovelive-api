@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { app } from "../src/app";
+import { filterMusic } from "../src/services/music";
 import { createTestEnv } from "./helpers";
 
 describe("api routes", () => {
@@ -55,6 +56,36 @@ describe("api routes", () => {
     expect(json.data.some((item) => item.title === "愛してるばんざーい！")).toBe(true);
     expect(json.data[0].source).toBe("official-otonokizaka-music");
     expect(json.data[0].albumTitle).toContain("もぎゅっと");
+  });
+
+  it("prioritizes original exact music matches when querying aliases", () => {
+    const result = filterMusic(
+      [
+        {
+          id: "compilation",
+          title: "愛してるばんざーい！",
+          artist: "μ's",
+          series: ["μ's"],
+          albumTitle: "μ'ｓ Memorial CD-BOX「Complete BEST BOX」",
+          releaseDate: "2019-12-25",
+          source: "official-otonokizaka-music",
+          sourceUrl: "https://www.lovelive-anime.jp/otonokizaka/release.php#cd83"
+        },
+        {
+          id: "original",
+          title: "愛してるばんざーい！",
+          artist: "μ’s",
+          series: ["μ's"],
+          albumTitle: "μ’s 4thシングル「もぎゅっと\"love\"で接近中！」",
+          coverUrl: "https://www.lovelive-anime.jp/otonokizaka/img/release/cd_10a.jpg",
+          releaseDate: "2012-02-15",
+          source: "official-otonokizaka-music",
+          sourceUrl: "https://www.lovelive-anime.jp/otonokizaka/release.php#cd89"
+        }
+      ],
+      { q: "爱上你万岁" }
+    );
+    expect(result[0].id).toBe("original");
   });
 
   it("returns reserved card endpoint as 501", async () => {
