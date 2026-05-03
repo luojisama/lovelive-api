@@ -1,5 +1,31 @@
 [
   {
+    "id": "music-fixture-mogyutto-love",
+    "title": "もぎゅっと“love”で接近中！",
+    "artist": "μ’s",
+    "series": ["μ's"],
+    "albumTitle": "μ’s 4thシングル「もぎゅっと\"love\"で接近中！」【初回生産限定 Lジャケ仕様】",
+    "albumType": "CD",
+    "coverUrl": "https://www.lovelive-anime.jp/otonokizaka/img/release/cd_10a.jpg",
+    "releaseDate": "2012-02-15",
+    "trackNumber": 1,
+    "source": "official-otonokizaka-music",
+    "sourceUrl": "https://www.lovelive-anime.jp/otonokizaka/release.php#cd89"
+  },
+  {
+    "id": "music-fixture-aishiteru-banzai",
+    "title": "愛してるばんざーい！",
+    "artist": "μ’s",
+    "series": ["μ's"],
+    "albumTitle": "μ’s 4thシングル「もぎゅっと\"love\"で接近中！」【初回生産限定 Lジャケ仕様】",
+    "albumType": "CD",
+    "coverUrl": "https://www.lovelive-anime.jp/otonokizaka/img/release/cd_10a.jpg",
+    "releaseDate": "2012-02-15",
+    "trackNumber": 2,
+    "source": "official-otonokizaka-music",
+    "sourceUrl": "https://www.lovelive-anime.jp/otonokizaka/release.php#cd89"
+  },
+  {
     "id": "music-fixture-aurora-flower",
     "title": "AURORA FLOWER",
     "artist": "スリーズブーケ＆DOLLCHESTRA＆みらくらぱーく！",

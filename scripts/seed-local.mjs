@@ -9,7 +9,7 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const entries = [
   ["characters:normalized:v2", join(root, "src", "fixtures", "characters.json"), 7 * 24 * 60 * 60],
   ["events:normalized:v7", join(root, "src", "fixtures", "events.json"), 3 * 60 * 60],
-  ["music:official:v2", join(root, "src", "fixtures", "music.json"), 24 * 60 * 60]
+  ["music:official:v3", join(root, "src", "fixtures", "music.json"), 24 * 60 * 60]
 ];
 
 const tempDir = mkdtempSync(join(tmpdir(), "lovelive-api-seed-"));

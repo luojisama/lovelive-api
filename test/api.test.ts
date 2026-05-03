@@ -47,6 +47,16 @@ describe("api routes", () => {
     expect(json.data[0].coverUrl).toBeTruthy();
   });
 
+  it("filters music by common Chinese title aliases", async () => {
+    const response = await app.request("/v1/music?q=爱上你万岁", {}, createTestEnv());
+    expect(response.status).toBe(200);
+    const json = await response.json() as { data: Array<{ title: string; albumTitle: string; source: string }>; meta: { count: number } };
+    expect(json.meta.count).toBeGreaterThan(0);
+    expect(json.data.some((item) => item.title === "愛してるばんざーい！")).toBe(true);
+    expect(json.data[0].source).toBe("official-otonokizaka-music");
+    expect(json.data[0].albumTitle).toContain("もぎゅっと");
+  });
+
   it("returns reserved card endpoint as 501", async () => {
     const response = await app.request("/v1/cards/random?game=sif2", {}, createTestEnv());
     expect(response.status).toBe(501);

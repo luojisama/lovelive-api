@@ -1,10 +1,11 @@
 import type { DataResult, Env, MusicItem } from "../types";
+import { MUSIC_QUERY_ALIASES } from "../data/musicAliases";
 import fixtureMusic from "../fixtures/music.json";
 import { fetchOfficialMusic } from "../adapters/officialMusic";
 import { normalizeSearchText } from "../utils/text";
 import { isFresh, readCached, writeCached } from "./cache";
 
-const CACHE_KEY = "music:official:v2";
+const CACHE_KEY = "music:official:v3";
 const TTL_SECONDS = 24 * 60 * 60;
 
 interface MusicQuery {
@@ -63,7 +64,7 @@ export async function getMusicById(env: Env, id: string): Promise<DataResult<Mus
 }
 
 export function filterMusic(items: MusicItem[], query: MusicQuery): MusicItem[] {
-  const q = query.q ? normalizeSearchText(query.q) : "";
+  const qTerms = query.q ? expandMusicQuery(query.q) : [];
   const series = query.series ? normalizeSearchText(query.series) : "";
   const album = query.album ? normalizeSearchText(query.album) : "";
   const artist = query.artist ? normalizeSearchText(query.artist) : "";
@@ -80,14 +81,23 @@ export function filterMusic(items: MusicItem[], query: MusicQuery): MusicItem[] 
       if (album && !normalizeSearchText(item.albumTitle).includes(album)) return false;
       if (artist && !normalizeSearchText(item.artist ?? "").includes(artist)) return false;
       if (source && normalizeSearchText(item.source) !== source) return false;
-      if (q) {
+      if (qTerms.length > 0) {
         const haystack = [item.id, item.title, item.artist, item.albumTitle, item.source, item.sourceUrl, ...item.series]
           .filter(Boolean)
           .map((value) => normalizeSearchText(String(value)))
           .join("|");
-        if (!haystack.includes(q)) return false;
+        if (!qTerms.some((term) => haystack.includes(term))) return false;
       }
       return true;
     })
     .sort((left, right) => Date.parse(right.releaseDate ?? "1970-01-01") - Date.parse(left.releaseDate ?? "1970-01-01"));
+}
+
+function expandMusicQuery(value: string): string[] {
+  const normalized = normalizeSearchText(value);
+  const aliases =
+    MUSIC_QUERY_ALIASES[normalized] ??
+    Object.entries(MUSIC_QUERY_ALIASES).find(([key]) => normalizeSearchText(key) === normalized)?.[1] ??
+    [];
+  return [...new Set([normalized, ...aliases.map((alias) => normalizeSearchText(alias))].filter(Boolean))];
 }

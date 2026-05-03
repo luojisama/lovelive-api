@@ -125,14 +125,14 @@ pnpm seed:local
 
 查询参数：
 
-- `q`：按歌名、专辑名、演唱者模糊查询，例如 `Aspire`、`AURORA`。
-- `series`：按企划/团体筛选，例如 `Liella`、`蓮ノ空`。
+- `q`：按歌名、中文常用译名、专辑名、演唱者模糊查询，例如 `爱上你万岁`、`愛してるばんざーい`、`Aspire`、`AURORA`。
+- `series`：按企划/团体筛选，例如 `μ's`、`Aqours`、`虹ヶ咲`、`Liella`、`蓮ノ空`。
 - `album`：按专辑或单曲标题筛选。
 - `artist`：按演唱者筛选。
 - `from` / `to`：按发售日期筛选，支持 `YYYY-MM-DD`。
-- `source`：按来源筛选。当前常用值为 `official-yuigaoka-music`、`official-hasunosora-music`。
+- `source`：按来源筛选。当前常用值为 `official-otonokizaka-music`、`official-uranohoshi-music`、`official-nijigasaki-music`、`official-yuigaoka-music`、`official-hasunosora-music`。
 
-首版接入 Liella! 和蓮ノ空官方音乐页；后续可继续扩展 μ's、Aqours、虹咲等旧站音乐页。
+当前已接入 μ's、Aqours、虹咲、Liella!、蓮ノ空官方音乐页。旧站页面没有单曲详情页时，`sourceUrl` 会指向官方 CD 列表页的锚点，例如 `release.php#cd89`。
 
 ### `GET /v1/music/:id`
 
@@ -168,6 +168,8 @@ http://llapi.shiro.team/v1/events?from=2026-05-01&to=2026-05-31
 http://llapi.shiro.team/v1/events?category=live
 http://llapi.shiro.team/v1/events?source=llch-timeline&category=live
 http://llapi.shiro.team/v1/events?source=llch-cvtochina
+http://llapi.shiro.team/v1/music?q=爱上你万岁
+http://llapi.shiro.team/v1/music?q=愛してるばんざーい
 http://llapi.shiro.team/v1/music?q=Aspire
 http://llapi.shiro.team/v1/music?series=蓮ノ空&from=2025-01-01
 http://llapi.shiro.team/v1/cards/random?game=sif2
@@ -193,7 +195,7 @@ http://llapi.shiro.team/v1/cards/random?game=sif2
 - 角色资料、生日、头像、页面来源：萌娘百科角色页。
 - 头像小图：萌娘百科 `Name_*_icon*.png` 文件，参考 `lovelive_schedule` 插件的 `avatar_filename` / `avatar_url` 做法，并用当前萌娘百科模板页中的可访问图片地址更新。
 - 活动：LoveLive 官方日程和新闻、LL-CH 近期线上活动时间线、LL-CH 声优访华活动页，RSSHub 路由作为备用结构化源。
-- 音乐：Liella! 官方音乐页、蓮ノ空官方音乐页。返回曲目时以官方详情页的发售日、封面、收录曲为准。
+- 音乐：μ's 音乃木坂官方 release 页、Aqours 浦之星官方 CD 页、虹咲官方 CD 页、Liella! 官方音乐页、蓮ノ空官方音乐页。返回曲目时以官方页面的发售日、封面、收录曲为准。
 - SIF 卡面候选源：School Idol Tomodachi。
 - SIFAS/SIF2 卡面候选源：Idol Story。
 

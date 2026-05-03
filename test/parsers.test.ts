@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { parseLlchCvToChinaHtml } from "../src/adapters/llchCvToChina";
 import { parseLlchTimelineHtml } from "../src/adapters/llchTimeline";
 import { parseMoegirlCharacterPage } from "../src/adapters/moegirlCharacters";
-import { parseOfficialMusicDetail } from "../src/adapters/officialMusic";
+import { parseLegacyOfficialMusicPage, parseOfficialMusicDetail } from "../src/adapters/officialMusic";
 import { parseOfficialScheduleHtml } from "../src/adapters/officialSchedule";
 import { dedupeEvents } from "../src/services/events";
 
@@ -124,5 +124,86 @@ describe("music parsing", () => {
     expect(tracks[0].albumTitle).toContain("Aspire");
     expect(tracks[0].releaseDate).toBe("2025-05-28");
     expect(tracks[0].coverUrl).toContain("/cover.jpeg");
+  });
+
+  it("parses old official music pages into tracks", () => {
+    const tracks = parseLegacyOfficialMusicPage(
+      `
+      <div class="box" id="cd89">
+        <div class="titlebase">
+          <p>μ’s 4thシングル</p>
+          <p><strong>「もぎゅっと"love"で接近中！」【初回生産限定 Lジャケ仕様】</strong></p>
+        </div>
+        <div class="cover"><img src="img/release/cd_10a.jpg"></div>
+        <div class="text">
+          【アーティスト】<br>
+          μ’s<br>
+          <br>
+          【発売日】<br>
+          2024年3月27日（水）<br>
+          <br>
+          【収録曲】<br>
+          1. もぎゅっと“love”で接近中！<br>
+          2. 愛してるばんざーい！<br>
+          3. もぎゅっと“love”で接近中！ (Off Vocal)<br>
+          4. 愛してるばんざーい！ (Off Vocal)<br>
+          オリジナル盤発売日：2012年2月15日<br>
+        </div>
+      </div>
+      `,
+      "https://www.lovelive-anime.jp/otonokizaka/release.php",
+      {
+        listUrl: "https://www.lovelive-anime.jp/otonokizaka/release.php",
+        series: ["μ's"],
+        source: "official-otonokizaka-music",
+        limit: 0,
+        mode: "legacy-page"
+      }
+    );
+    const banzai = tracks.find((track) => track.title === "愛してるばんざーい！");
+    expect(tracks).toHaveLength(2);
+    expect(banzai?.albumTitle).toContain("もぎゅっと");
+    expect(banzai?.artist).toBe("μ’s");
+    expect(banzai?.releaseDate).toBe("2012-02-15");
+    expect(banzai?.coverUrl).toBe("https://www.lovelive-anime.jp/otonokizaka/img/release/cd_10a.jpg");
+    expect(banzai?.sourceUrl).toBe("https://www.lovelive-anime.jp/otonokizaka/release.php#cd89");
+  });
+
+  it("parses old official track lists with nested credit blocks", () => {
+    const tracks = parseLegacyOfficialMusicPage(
+      `
+      <div class="box" id="cd45">
+        <div class="title"><p><span>TVアニメ挿入歌</span>Future Parade</p></div>
+        <div class="cover"><img src="img/cd/cd45.png?v2"></div>
+        <dl class="spec">
+          <dt>【アーティスト】</dt><dd>虹ヶ咲学園スクールアイドル同好会</dd>
+          <dt>【発売日】</dt><dd>2022年7月27日(水)</dd>
+          <dt>【収録内容】</dt>
+          <dd>
+            <ul class="track">
+              <li>01.Future Parade
+                <dl><dt>作詞：</dt><dd>Ayaka Miyake</dd></dl>
+              </li>
+              <li>02.Level Oops! Adventures
+                <dl><dt>作詞・作曲・編曲：</dt><dd>T4K</dd></dl>
+              </li>
+              <li>03.Future Parade(Off Vocal)</li>
+            </ul>
+          </dd>
+        </dl>
+      </div>
+      `,
+      "https://www.lovelive-anime.jp/nijigasaki/cd.php",
+      {
+        listUrl: "https://www.lovelive-anime.jp/nijigasaki/cd.php",
+        series: ["虹ヶ咲学園"],
+        source: "official-nijigasaki-music",
+        limit: 0,
+        mode: "legacy-page"
+      }
+    );
+    expect(tracks.map((track) => track.title)).toEqual(["Future Parade", "Level Oops! Adventures"]);
+    expect(tracks[0].artist).toBe("虹ヶ咲学園スクールアイドル同好会");
+    expect(tracks[0].releaseDate).toBe("2022-07-27");
   });
 });
