@@ -12,7 +12,8 @@
     "check:data": "node scripts/check-character-data.mjs",
     "check:sources": "node scripts/check-character-sources.mjs",
     "typecheck": "tsc --noEmit",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "deploy:cf": "node scripts/deploy-cloudflare.mjs"
   },
   "dependencies": {
     "hono": "^4.8.0"

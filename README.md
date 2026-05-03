@@ -42,7 +42,39 @@ pnpm seed:local
 
 ## 部署
 
-创建 Cloudflare KV namespace 后，把 `wrangler.toml` 中 staging/production 的占位 ID 替换成真实 ID，然后部署：
+一键部署到 Cloudflare Workers：
+
+```bash
+pnpm deploy:cf
+```
+
+这条命令会自动完成：
+
+- 检查 Wrangler 登录状态；未登录时执行 `wrangler login`。
+- 创建或复用生产环境 KV namespace。
+- 把生产 KV namespace ID 写入 `wrangler.toml`。
+- 运行 `typecheck` 和测试。
+- 执行 `wrangler deploy --env production`。
+
+如果只想快速部署，跳过本地检查：
+
+```bash
+pnpm deploy:cf -- --skip-checks
+```
+
+如果希望部署前同时核对线上数据源和头像 URL：
+
+```bash
+pnpm deploy:cf -- --with-data-checks
+```
+
+也可以指定环境或 KV 名称：
+
+```bash
+pnpm deploy:cf -- --env production --kv-name lovelive-api-production-cache
+```
+
+手动部署仍然可用：
 
 ```bash
 pnpm deploy
