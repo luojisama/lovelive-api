@@ -26,7 +26,7 @@ for (const [key, file, ttlSeconds] of entries) {
 
   const result = spawnSync(
     "pnpm",
-    ["wrangler", "kv", "key", "put", key, "--path", envelopeFile, "--binding", "CACHE", "--local"],
+    ["wrangler", "kv", "key", "put", key, "--path", envelopeFile, "--binding", "CACHE", "--env", "local", "--local"],
     { cwd: root, stdio: "inherit", shell: process.platform === "win32" }
   );
   if (result.status !== 0) {

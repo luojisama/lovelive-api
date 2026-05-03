@@ -1,7 +1,7 @@
 export type UpstreamMode = "fixture" | "live";
 
 export interface Env {
-  CACHE: KVNamespace;
+  CACHE?: KVNamespace;
   UPSTREAM_MODE?: UpstreamMode;
   RSSHUB_BASE_URL?: string;
 }

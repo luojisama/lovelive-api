@@ -42,7 +42,28 @@ pnpm seed:local
 
 ## 部署
 
-一键部署到 Cloudflare Workers：
+### Cloudflare 控制台选择 GitHub 仓库部署
+
+可以在 Workers 控制台里直接选择这个 GitHub 仓库部署。创建项目时建议这样填：
+
+- Framework preset：`None`
+- Build command：留空
+- Deploy command：`pnpm deploy`
+- Root directory：留空，仓库根目录就是项目根目录
+
+不要使用默认的 `npx wrangler deploy` 作为正式部署命令。它可以部署 API，但不会自动创建生产 KV；`pnpm deploy` 会自动创建或复用 `lovelive-api-production-cache`，并用 `production` 环境发布。
+
+如果你现在看到 `KV namespace 'local_lovelive_api_cache' is not valid`，说明控制台还在执行默认命令。到项目的 Build settings / Deploy command，把命令改成：
+
+```bash
+pnpm deploy
+```
+
+然后重新部署即可。
+
+### 本机一键部署
+
+本机完整检查后部署到 Cloudflare Workers：
 
 ```bash
 pnpm deploy:cf
@@ -59,7 +80,7 @@ pnpm deploy:cf
 如果只想快速部署，跳过本地检查：
 
 ```bash
-pnpm deploy:cf -- --skip-checks
+pnpm deploy
 ```
 
 如果希望部署前同时核对线上数据源和头像 URL：
@@ -77,5 +98,5 @@ pnpm deploy:cf -- --env production --kv-name lovelive-api-production-cache
 手动部署仍然可用：
 
 ```bash
-pnpm deploy
+pnpm deploy:raw
 ```

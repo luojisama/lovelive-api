@@ -4,16 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev --local --port 8787",
-    "dev:live": "wrangler dev --local --port 8787 --var UPSTREAM_MODE:live",
+    "dev": "wrangler dev --env local --local --port 8787",
+    "dev:live": "wrangler dev --env local --local --port 8787 --var UPSTREAM_MODE:live",
     "seed:local": "node scripts/seed-local.mjs",
     "test": "vitest run",
     "smoke:local": "node scripts/smoke-local.mjs",
     "check:data": "node scripts/check-character-data.mjs",
     "check:sources": "node scripts/check-character-sources.mjs",
     "typecheck": "tsc --noEmit",
-    "deploy": "wrangler deploy",
-    "deploy:cf": "node scripts/deploy-cloudflare.mjs"
+    "deploy": "node scripts/deploy-cloudflare.mjs --skip-checks",
+    "deploy:cf": "node scripts/deploy-cloudflare.mjs",
+    "deploy:raw": "wrangler deploy"
   },
   "dependencies": {
     "hono": "^4.8.0"

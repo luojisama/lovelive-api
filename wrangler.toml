@@ -4,11 +4,17 @@ compatibility_date = "2026-05-03"
 
 triggers = { crons = ["0 */3 * * *"] }
 
+# 顶层配置用于 Cloudflare 控制台 Git 集成的默认 `npx wrangler deploy`。
+# 这里不绑定本地 KV 占位 ID，避免线上部署时报 namespace 无效。
 [vars]
+UPSTREAM_MODE = "live"
+RSSHUB_BASE_URL = "https://rsshub.app"
+
+[env.local.vars]
 UPSTREAM_MODE = "fixture"
 RSSHUB_BASE_URL = "https://rsshub.app"
 
-[[kv_namespaces]]
+[[env.local.kv_namespaces]]
 binding = "CACHE"
 id = "local_lovelive_api_cache"
 
