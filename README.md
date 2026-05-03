@@ -1,6 +1,6 @@
 # LoveLive 聚合 API
 
-这是一个可部署到 Cloudflare Workers 的 LoveLive 聚合 API，提供角色资料、生日、活动，以及预留的游戏卡面接口。
+这是一个可部署到 Cloudflare Workers 的 LoveLive 聚合 API，提供角色资料、生日、活动、音乐查询，以及预留的游戏卡面接口。
 
 ## 本地开发
 
@@ -35,6 +35,16 @@ pnpm seed:local
 ```json
 { "error": { "code": "ERROR_CODE", "message": "错误说明" } }
 ```
+
+接口速览：
+
+| 接口 | 用途 |
+| --- | --- |
+| `GET /v1/characters` | 查角色、生日、印象色、头像 |
+| `GET /v1/birthdays/today` | 查今天生日角色 |
+| `GET /v1/events` | 查官方/补充源聚合活动 |
+| `GET /v1/music` | 查官方音乐、封面、发售日、所属专辑 |
+| `GET /v1/cards/random` | 预留 SIF/SIFAS/SIF2 随机卡面 |
 
 ### `GET /v1/characters`
 
@@ -76,12 +86,13 @@ pnpm seed:local
 - `to`：结束时间，支持 `YYYY-MM-DD` 或完整 ISO 时间。
 - `series`：按企划/团体筛选，例如 `Liella`、`蓮ノ空`、`虹ヶ咲`。
 - `category`：活动类型。常用值为 `live`、`stream`、`event`。
-- `source`：按来源筛选。常用值为 `official-schedule`、`official-news`、`rsshub`、`llch-timeline`。
+- `source`：按来源筛选。常用值为 `official-schedule`、`official-news`、`rsshub`、`llch-timeline`、`llch-cvtochina`。
 
 说明：
 
 - `official-schedule` 和 `official-news` 是官方来源。
 - `llch-timeline` 来自 `ll-ch.com/timeline.html`，覆盖近期线上直播、演唱会、FMT、生放送等活动，时效性更强。
+- `llch-cvtochina` 来自 `ll-ch.com/main/cvtochina/`，覆盖 LoveLive 系列声优近期访华活动。
 - `rsshub` 是结构化 fallback，建议生产环境接自建 RSSHub。
 
 ### `GET /v1/events/:id`
@@ -98,6 +109,34 @@ pnpm seed:local
 - `venue`：场馆或来源标注地点，可能为空。
 - `performers`：出演者，来源可解析时返回。
 - `source` / `sourceUrl`：规范化来源和原始链接。
+
+### `GET /v1/music`
+
+获取官方音乐曲目。每条数据是一首歌，不是一张 CD。字段保持简单：
+
+- `title`：歌名。
+- `artist`：演唱者，能解析到单曲演唱者时优先使用单曲演唱者。
+- `series`：所属企划或团体。
+- `albumTitle`：所属专辑、单曲或音乐商品名。
+- `albumType`：商品类型，例如 `CD`。
+- `coverUrl`：官方封面图。
+- `releaseDate`：发售日期，格式 `YYYY-MM-DD`。
+- `sourceUrl`：官方音乐详情页。
+
+查询参数：
+
+- `q`：按歌名、专辑名、演唱者模糊查询，例如 `Aspire`、`AURORA`。
+- `series`：按企划/团体筛选，例如 `Liella`、`蓮ノ空`。
+- `album`：按专辑或单曲标题筛选。
+- `artist`：按演唱者筛选。
+- `from` / `to`：按发售日期筛选，支持 `YYYY-MM-DD`。
+- `source`：按来源筛选。当前常用值为 `official-yuigaoka-music`、`official-hasunosora-music`。
+
+首版接入 Liella! 和蓮ノ空官方音乐页；后续可继续扩展 μ's、Aqours、虹咲等旧站音乐页。
+
+### `GET /v1/music/:id`
+
+获取单首歌详情。`:id` 使用 `/v1/music` 返回的 id。未找到时返回 `404 NOT_FOUND`。
 
 ### `GET /v1/cards/random`
 
@@ -128,6 +167,9 @@ http://llapi.shiro.team/v1/birthdays/today?tz=Asia/Shanghai
 http://llapi.shiro.team/v1/events?from=2026-05-01&to=2026-05-31
 http://llapi.shiro.team/v1/events?category=live
 http://llapi.shiro.team/v1/events?source=llch-timeline&category=live
+http://llapi.shiro.team/v1/events?source=llch-cvtochina
+http://llapi.shiro.team/v1/music?q=Aspire
+http://llapi.shiro.team/v1/music?series=蓮ノ空&from=2025-01-01
 http://llapi.shiro.team/v1/cards/random?game=sif2
 ```
 
@@ -150,7 +192,8 @@ http://llapi.shiro.team/v1/cards/random?game=sif2
 
 - 角色资料、生日、头像、页面来源：萌娘百科角色页。
 - 头像小图：萌娘百科 `Name_*_icon*.png` 文件，参考 `lovelive_schedule` 插件的 `avatar_filename` / `avatar_url` 做法，并用当前萌娘百科模板页中的可访问图片地址更新。
-- 活动：LoveLive 官方日程和新闻、LL-CH 近期线上活动时间线，RSSHub 路由作为备用结构化源。
+- 活动：LoveLive 官方日程和新闻、LL-CH 近期线上活动时间线、LL-CH 声优访华活动页，RSSHub 路由作为备用结构化源。
+- 音乐：Liella! 官方音乐页、蓮ノ空官方音乐页。返回曲目时以官方详情页的发售日、封面、收录曲为准。
 - SIF 卡面候选源：School Idol Tomodachi。
 - SIFAS/SIF2 卡面候选源：Idol Story。
 

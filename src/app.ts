@@ -3,6 +3,7 @@ import type { Env } from "./types";
 import { fail, notFound, ok } from "./utils/api";
 import { getCharacterById, getCharacters, getTodayBirthdays } from "./services/characters";
 import { getEventById, getEvents } from "./services/events";
+import { getMusic, getMusicById } from "./services/music";
 import { assertCardGame } from "./adapters/schoolidoSif";
 import { reservedCardMessage } from "./services/cards";
 
@@ -12,7 +13,7 @@ app.get("/", (c) =>
   ok({
     name: "lovelive-api",
     version: "0.1.0",
-    endpoints: ["/v1/characters", "/v1/birthdays/today", "/v1/events", "/v1/cards/random"]
+    endpoints: ["/v1/characters", "/v1/birthdays/today", "/v1/events", "/v1/music", "/v1/cards/random"]
   })
 );
 
@@ -57,6 +58,25 @@ app.get("/v1/events", async (c) => {
 app.get("/v1/events/:id", async (c) => {
   const result = await getEventById(c.env, c.req.param("id"));
   if (!result.data) return notFound("未找到活动");
+  return ok(result.data, result.meta);
+});
+
+app.get("/v1/music", async (c) => {
+  const result = await getMusic(c.env, {
+    q: c.req.query("q"),
+    series: c.req.query("series"),
+    album: c.req.query("album"),
+    artist: c.req.query("artist"),
+    from: c.req.query("from"),
+    to: c.req.query("to"),
+    source: c.req.query("source")
+  });
+  return ok(result.data, result.meta);
+});
+
+app.get("/v1/music/:id", async (c) => {
+  const result = await getMusicById(c.env, c.req.param("id"));
+  if (!result.data) return notFound("未找到音乐");
   return ok(result.data, result.meta);
 });
 

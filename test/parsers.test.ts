@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { parseLlchCvToChinaHtml } from "../src/adapters/llchCvToChina";
 import { parseLlchTimelineHtml } from "../src/adapters/llchTimeline";
 import { parseMoegirlCharacterPage } from "../src/adapters/moegirlCharacters";
+import { parseOfficialMusicDetail } from "../src/adapters/officialMusic";
 import { parseOfficialScheduleHtml } from "../src/adapters/officialSchedule";
 import { dedupeEvents } from "../src/services/events";
 
@@ -55,6 +57,25 @@ describe("event parsing", () => {
     expect(events[1].title).toContain("DAY2");
   });
 
+  it("parses ll-ch cv-to-china table rows", () => {
+    const events = parseLlchCvToChinaHtml(
+      `
+      <table>
+        <tr><th>日期</th><th>活动名称</th></tr>
+        <tr>
+          <td>5.23</td><td>結那 FanMeeting in Taipei 2026</td><td>14:30</td>
+          <td>台北市松山区复兴南路一段39号9层<br />MOONDOG</td><td>宝島制作</td><td>—</td>
+        </tr>
+      </table>
+      `,
+      new Date("2026-05-04T00:00:00+08:00")
+    );
+    expect(events).toHaveLength(1);
+    expect(events[0].source).toBe("llch-cvtochina");
+    expect(events[0].startAt).toBe("2026-05-23T14:30:00+08:00");
+    expect(events[0].performers).toContain("結那");
+  });
+
   it("dedupes by source url or normalized content", () => {
     const events = dedupeEvents([
       {
@@ -79,5 +100,29 @@ describe("event parsing", () => {
       }
     ]);
     expect(events).toHaveLength(1);
+  });
+});
+
+describe("music parsing", () => {
+  it("parses official music detail into tracks", () => {
+    const tracks = parseOfficialMusicDetail(
+      `
+      <div class="title"><p><span class="subname">Liella! 3rdアルバム</span>「Aspire」【オリジナル盤】</p></div>
+      <div class="cover"><img src="img/cd.png" style="background-image:url(../common/api/image.php?img_path=/cover.jpeg)" alt=""></div>
+      <dl class="spec">
+        <dt>【アーティスト】</dt><dd>Liella!</dd>
+        <dt>【発売日】</dt><dd>2025年5月28日(水)</dd>
+        <dt>【収録内容】</dt>
+        <dd><p class="list">01. Let's be ONE<br />　　歌：Liella!<br />02. Aspire<br />　　歌：Liella!<br />03. Aspire(Off Vocal)</p></dd>
+      </dl>
+      `,
+      "https://www.lovelive-anime.jp/yuigaoka/music/detail.php?p=01_4748",
+      { listUrl: "https://www.lovelive-anime.jp/yuigaoka/music/", series: ["Liella!"], source: "official-yuigaoka-music", limit: 1 }
+    );
+    expect(tracks).toHaveLength(2);
+    expect(tracks[0].title).toBe("Let's be ONE");
+    expect(tracks[0].albumTitle).toContain("Aspire");
+    expect(tracks[0].releaseDate).toBe("2025-05-28");
+    expect(tracks[0].coverUrl).toContain("/cover.jpeg");
   });
 });

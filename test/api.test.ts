@@ -37,6 +37,16 @@ describe("api routes", () => {
     expect(json.data.every((event) => event.category === "live")).toBe(true);
   });
 
+  it("filters music by query", async () => {
+    const response = await app.request("/v1/music?q=Aspire", {}, createTestEnv());
+    expect(response.status).toBe(200);
+    const json = await response.json() as { data: Array<{ title: string; albumTitle: string; coverUrl?: string }>; meta: { count: number } };
+    expect(json.meta.count).toBeGreaterThan(0);
+    expect(json.data.some((item) => item.title === "Aspire")).toBe(true);
+    expect(json.data[0].albumTitle).toBeTruthy();
+    expect(json.data[0].coverUrl).toBeTruthy();
+  });
+
   it("returns reserved card endpoint as 501", async () => {
     const response = await app.request("/v1/cards/random?game=sif2", {}, createTestEnv());
     expect(response.status).toBe(501);

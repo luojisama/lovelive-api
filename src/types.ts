@@ -60,6 +60,20 @@ export interface EventItem {
   sourceUrl: string;
 }
 
+export interface MusicItem {
+  id: string;
+  title: string;
+  artist?: string;
+  series: string[];
+  albumTitle: string;
+  albumType?: string;
+  coverUrl?: string;
+  releaseDate?: string;
+  trackNumber?: number;
+  source: string;
+  sourceUrl: string;
+}
+
 export interface ApiMeta {
   count?: number;
   source?: string;

@@ -6,7 +6,7 @@ const checks = [
   ["/v1/characters/kanon-shibuya", 200],
   ["/v1/birthdays/today?tz=Asia/Shanghai", 200],
   ["/v1/events?category=live", 200],
-  ["/v1/events/official-hasunosora-fantasy-2025", 200],
+  ["/v1/music?q=Aspire", 200],
   ["/v1/cards/random?game=sif", 501]
 ];
 
@@ -22,4 +22,20 @@ for (const [path, expectedStatus] of checks) {
   }
 }
 
+await checkFirstDetail("/v1/events?category=live", "/v1/events");
+await checkFirstDetail("/v1/music?q=Aspire", "/v1/music");
+
 console.log(`Smoke checks passed against ${baseUrl}`);
+
+async function checkFirstDetail(listPath, detailPrefix) {
+  const listResponse = await fetch(`${baseUrl}${listPath}`);
+  const listJson = await listResponse.json();
+  const id = listJson.data?.[0]?.id;
+  if (!id) return;
+
+  const detailResponse = await fetch(`${baseUrl}${detailPrefix}/${id}`);
+  if (detailResponse.status !== 200) {
+    const body = await detailResponse.text();
+    throw new Error(`${detailPrefix}/${id} expected 200, got ${detailResponse.status}: ${body}`);
+  }
+}

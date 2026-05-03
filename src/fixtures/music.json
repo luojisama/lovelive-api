@@ -1,0 +1,54 @@
+[
+  {
+    "id": "music-fixture-aurora-flower",
+    "title": "AURORA FLOWER",
+    "artist": "スリーズブーケ＆DOLLCHESTRA＆みらくらぱーく！",
+    "series": ["蓮ノ空女学院"],
+    "albumTitle": "蓮ノ空女学院スクールアイドルクラブ 5thシングル「AURORA FLOWER」",
+    "albumType": "CD",
+    "coverUrl": "https://www.lovelive-anime.jp/hasunosora/uploads/30_jacket.jpg",
+    "releaseDate": "2025-02-26",
+    "trackNumber": 1,
+    "source": "official-hasunosora-music",
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/music/30/"
+  },
+  {
+    "id": "music-fixture-gekkabijin",
+    "title": "ゲッカビジン",
+    "artist": "蓮ノ空女学院スクールアイドルクラブ",
+    "series": ["蓮ノ空女学院"],
+    "albumTitle": "蓮ノ空女学院スクールアイドルクラブ 5thシングル「AURORA FLOWER」",
+    "albumType": "CD",
+    "coverUrl": "https://www.lovelive-anime.jp/hasunosora/uploads/30_jacket.jpg",
+    "releaseDate": "2025-02-26",
+    "trackNumber": 2,
+    "source": "official-hasunosora-music",
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/music/30/"
+  },
+  {
+    "id": "music-fixture-lets-be-one",
+    "title": "Let's be ONE",
+    "artist": "Liella!",
+    "series": ["Liella!"],
+    "albumTitle": "Liella! 3rdアルバム「Aspire」【オリジナル盤】",
+    "albumType": "CD",
+    "coverUrl": "https://www.lovelive-anime.jp/yuigaoka/common/api/image.php?img_path=/lovelive/jp/music/2025/05/16/1002/XiSW7ZI9tB7BzxAA/UwTmsgTilJUkcSAt.jpeg",
+    "releaseDate": "2025-05-28",
+    "trackNumber": 1,
+    "source": "official-yuigaoka-music",
+    "sourceUrl": "https://www.lovelive-anime.jp/yuigaoka/music/detail.php?p=01_4748"
+  },
+  {
+    "id": "music-fixture-aspire",
+    "title": "Aspire",
+    "artist": "Liella!",
+    "series": ["Liella!"],
+    "albumTitle": "Liella! 3rdアルバム「Aspire」【オリジナル盤】",
+    "albumType": "CD",
+    "coverUrl": "https://www.lovelive-anime.jp/yuigaoka/common/api/image.php?img_path=/lovelive/jp/music/2025/05/16/1002/XiSW7ZI9tB7BzxAA/UwTmsgTilJUkcSAt.jpeg",
+    "releaseDate": "2025-05-28",
+    "trackNumber": 2,
+    "source": "official-yuigaoka-music",
+    "sourceUrl": "https://www.lovelive-anime.jp/yuigaoka/music/detail.php?p=01_4748"
+  }
+]

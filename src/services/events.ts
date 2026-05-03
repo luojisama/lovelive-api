@@ -1,5 +1,6 @@
 import type { DataResult, Env, EventItem } from "../types";
 import fixtureEvents from "../fixtures/events.json";
+import { fetchLlchCvToChinaEvents } from "../adapters/llchCvToChina";
 import { fetchLlchTimelineEvents } from "../adapters/llchTimeline";
 import { fetchOfficialNewsEvents } from "../adapters/officialNews";
 import { fetchOfficialSchedule } from "../adapters/officialSchedule";
@@ -7,7 +8,7 @@ import { fetchRsshubEvents } from "../adapters/rsshubSchedule";
 import { isFresh, readCached, writeCached } from "./cache";
 import { normalizeSearchText, stableHash } from "../utils/text";
 
-const CACHE_KEY = "events:normalized:v5";
+const CACHE_KEY = "events:normalized:v7";
 const TTL_SECONDS = 3 * 60 * 60;
 
 interface EventQuery {
@@ -34,7 +35,13 @@ export async function getEvents(env: Env, query: EventQuery = {}, forceRefresh =
   }
 
   try {
-    const sourceResults = await Promise.allSettled([fetchOfficialSchedule(), fetchLlchTimelineEvents(), fetchOfficialNewsEvents(), fetchRsshubEvents(env)]);
+    const sourceResults = await Promise.allSettled([
+      fetchOfficialSchedule(),
+      fetchLlchTimelineEvents(),
+      fetchLlchCvToChinaEvents(),
+      fetchOfficialNewsEvents(),
+      fetchRsshubEvents(env)
+    ]);
     const data = dedupeEvents(sourceResults.flatMap((result) => (result.status === "fulfilled" ? result.value : [])));
     if (data.length === 0) throw new Error("no live events parsed");
     const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "live");
