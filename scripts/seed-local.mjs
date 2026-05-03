@@ -7,8 +7,8 @@ import { dirname, join } from "node:path";
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 
 const entries = [
-  ["characters:normalized", join(root, "src", "fixtures", "characters.json"), 7 * 24 * 60 * 60],
-  ["events:normalized", join(root, "src", "fixtures", "events.json"), 3 * 60 * 60]
+  ["characters:normalized:v2", join(root, "src", "fixtures", "characters.json"), 7 * 24 * 60 * 60],
+  ["events:normalized:v5", join(root, "src", "fixtures", "events.json"), 3 * 60 * 60]
 ];
 
 const tempDir = mkdtempSync(join(tmpdir(), "lovelive-api-seed-"));

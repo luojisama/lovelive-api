@@ -20,12 +20,14 @@ for (const character of characters) {
   if (!character.sourceUrl?.includes("moegirl.org.cn")) problems.push(`${character.id} 来源不是萌娘百科`);
   if (!character.avatarUrl) {
     problems.push(`${character.id} 缺少头像 URL`);
-    continue;
+  } else {
+    await assertImageUrl(character.avatarUrl, `${character.id} 头像`, problems);
   }
-  const avatar = await fetch(character.avatarUrl, { method: "GET" });
-  const contentType = avatar.headers.get("content-type") ?? "";
-  if (!avatar.ok || !contentType.startsWith("image/")) {
-    problems.push(`${character.id} 头像不可用：${avatar.status} ${contentType}`);
+
+  if (!character.avatarIconUrl) {
+    problems.push(`${character.id} 缺少头像小图 URL`);
+  } else {
+    await assertImageUrl(character.avatarIconUrl, `${character.id} 头像小图`, problems);
   }
 }
 
@@ -33,4 +35,12 @@ if (problems.length > 0) {
   throw new Error(`角色数据检查失败：\n${problems.join("\n")}`);
 }
 
-console.log(`角色数据检查通过：${characters.length} 个角色，头像 URL 全部可用。`);
+console.log(`角色数据检查通过：${characters.length} 个角色，头像 URL 和头像小图 URL 全部可用。`);
+
+async function assertImageUrl(url, label, problems) {
+  const response = await fetch(url, { method: "GET" });
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!response.ok || !contentType.startsWith("image/")) {
+    problems.push(`${label} 不可用：${response.status} ${contentType}`);
+  }
+}

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { parseLlchTimelineHtml } from "../src/adapters/llchTimeline";
 import { parseMoegirlCharacterPage } from "../src/adapters/moegirlCharacters";
 import { parseOfficialScheduleHtml } from "../src/adapters/officialSchedule";
 import { dedupeEvents } from "../src/services/events";
@@ -24,6 +25,34 @@ describe("event parsing", () => {
     expect(events).toHaveLength(1);
     expect(events[0].category).toBe("live");
     expect(events[0].venue).toBe("パシフィコ横浜 国立大ホール");
+  });
+
+  it("parses ll-ch timeline live days in Beijing time", () => {
+    const events = parseLlchTimelineHtml(
+      `
+      <section id="cd-timeline">
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-content">
+            <h2><center><img /></center>ラブライブ！蓮ノ空女学院スクールアイドルクラブ 6th Live Dream</h2>
+            <p>
+              活动场馆：兵庫・神戸ワールド記念ホール<br />
+              配信日期：DAY1 - 5月23日（六） 16:00 <span>北京时间</span><br />
+              　　　　　DAY2 - 5月24日（日） 14:00 <span>北京时间</span><br />
+              　出　演：蓮ノ空女学院スクールアイドルクラブ<br />
+            </p>
+            <a href="https://www.lovelive-anime.jp/hasunosora/live-event/live_detail.php?p=6thBGP" class="btn-official">官方公告</a>
+            <span class="cd-date">莲之空女学院</span>
+          </div>
+        </div>
+      </section>
+      `,
+      new Date("2026-05-04T00:00:00+08:00")
+    );
+    expect(events).toHaveLength(2);
+    expect(events[0].source).toBe("llch-timeline");
+    expect(events[0].category).toBe("live");
+    expect(events[0].startAt).toBe("2026-05-23T16:00:00+08:00");
+    expect(events[1].title).toContain("DAY2");
   });
 
   it("dedupes by source url or normalized content", () => {

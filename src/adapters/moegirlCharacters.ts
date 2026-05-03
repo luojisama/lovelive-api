@@ -1,5 +1,6 @@
 import type { Character } from "../types";
 import { MOEGIRL_CHARACTER_METADATA } from "../data/characterMetadata";
+import { MOEGIRL_CHARACTER_ICON_METADATA } from "../data/characterIconMetadata";
 import { birthdayText, parseMonthDay } from "../utils/date";
 import { fetchText } from "../services/upstream";
 
@@ -25,6 +26,7 @@ export async function fetchMoegirlCharacters(base: Character[]): Promise<Charact
 export function applyMoegirlMetadata(base: Character[]): Character[] {
   return base.map((character) => {
     const metadata = MOEGIRL_CHARACTER_METADATA[character.id];
+    const iconMetadata = MOEGIRL_CHARACTER_ICON_METADATA[character.id];
     if (!metadata) return character;
     const parsedBirthday = metadata.birthdayText ? parseMonthDay(metadata.birthdayText) : null;
     return {
@@ -38,6 +40,8 @@ export function applyMoegirlMetadata(base: Character[]): Character[] {
         hex: (metadata.colorHex ?? character.color?.hex)?.toLowerCase()
       },
       avatarUrl: metadata.avatarUrl,
+      avatarIconUrl: iconMetadata?.url ?? character.avatarIconUrl,
+      avatarIconFilename: iconMetadata?.filename ?? character.avatarIconFilename,
       sourceUrl: metadata.pageUrl,
       sources: [{ name: MOEGIRL_SOURCE_NAME, url: metadata.pageUrl }]
     };

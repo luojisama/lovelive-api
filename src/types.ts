@@ -39,6 +39,8 @@ export interface Character {
   birthday?: CharacterBirthday;
   color?: CharacterColor;
   avatarUrl?: string | null;
+  avatarIconUrl?: string | null;
+  avatarIconFilename?: string;
   sourceUrl: string;
   sources: SourceRef[];
 }

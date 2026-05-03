@@ -1,12 +1,13 @@
 import type { DataResult, Env, EventItem } from "../types";
 import fixtureEvents from "../fixtures/events.json";
+import { fetchLlchTimelineEvents } from "../adapters/llchTimeline";
 import { fetchOfficialNewsEvents } from "../adapters/officialNews";
 import { fetchOfficialSchedule } from "../adapters/officialSchedule";
 import { fetchRsshubEvents } from "../adapters/rsshubSchedule";
 import { isFresh, readCached, writeCached } from "./cache";
 import { normalizeSearchText, stableHash } from "../utils/text";
 
-const CACHE_KEY = "events:normalized";
+const CACHE_KEY = "events:normalized:v5";
 const TTL_SECONDS = 3 * 60 * 60;
 
 interface EventQuery {
@@ -33,7 +34,7 @@ export async function getEvents(env: Env, query: EventQuery = {}, forceRefresh =
   }
 
   try {
-    const sourceResults = await Promise.allSettled([fetchOfficialSchedule(), fetchOfficialNewsEvents(), fetchRsshubEvents(env)]);
+    const sourceResults = await Promise.allSettled([fetchOfficialSchedule(), fetchLlchTimelineEvents(), fetchOfficialNewsEvents(), fetchRsshubEvents(env)]);
     const data = dedupeEvents(sourceResults.flatMap((result) => (result.status === "fulfilled" ? result.value : [])));
     if (data.length === 0) throw new Error("no live events parsed");
     const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "live");
@@ -87,7 +88,7 @@ export function dedupeEvents(events: EventItem[]): EventItem[] {
   const seen = new Map<string, EventItem>();
   for (const event of events) {
     const key =
-      event.sourceUrl && event.sourceUrl !== "https://www.lovelive-anime.jp/schedule/"
+      event.source !== "llch-timeline" && event.sourceUrl && event.sourceUrl !== "https://www.lovelive-anime.jp/schedule/"
         ? `${event.source}:${event.sourceUrl}`
         : `${normalizeSearchText(event.title)}:${event.startAt}:${normalizeSearchText(event.venue ?? "")}`;
     if (!seen.has(key)) {

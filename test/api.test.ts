@@ -14,9 +14,11 @@ describe("api routes", () => {
   it("returns a character detail", async () => {
     const response = await app.request("/v1/characters/kaho-hinoshita", {}, createTestEnv());
     expect(response.status).toBe(200);
-    const json = await response.json() as { data: { id: string; color: { hex: string } } };
+    const json = await response.json() as { data: { id: string; color: { hex: string }; avatarIconUrl?: string; avatarIconFilename?: string } };
     expect(json.data.id).toBe("kaho-hinoshita");
     expect(json.data.color.hex).toBe("#f8b500");
+    expect(json.data.avatarIconFilename).toBe("Name_kaho_icon_105.png");
+    expect(json.data.avatarIconUrl).toContain("Name_kaho_icon_105.png");
   });
 
   it("returns birthday matches for a timezone date", async () => {

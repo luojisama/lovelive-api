@@ -24,19 +24,133 @@ pnpm seed:local
 
 ## API
 
-- `GET /v1/characters`
-- `GET /v1/characters/:id`
-- `GET /v1/birthdays/today?tz=Asia/Shanghai`
-- `GET /v1/events?from=&to=&series=&category=&source=`
-- `GET /v1/events/:id`
-- `GET /v1/cards/random?game=sif|sifas|sif2&character=&rarity=`
+所有成功响应统一为：
+
+```json
+{ "data": {}, "meta": {} }
+```
+
+错误响应统一为：
+
+```json
+{ "error": { "code": "ERROR_CODE", "message": "错误说明" } }
+```
+
+### `GET /v1/characters`
+
+获取角色列表。默认返回已规范化的角色资料，包含中文名、日文名、英文名、所属团体、所属企划、生日、印象色、头像、头像小图和来源。
+
+查询参数：
+
+- `group`：按团体或企划筛选，例如 `Liella!`、`μ's`、`莲之空女学院学园偶像俱乐部`。
+- `q`：按角色名、别名、英文名、日文名或 id 模糊查询，例如 `香音`、`maki`。
+- `birthdayMonth`：按生日月份筛选，取值 `1` 到 `12`。
+
+### `GET /v1/characters/:id`
+
+获取单个角色详情。`:id` 使用接口返回的稳定 id，例如 `kanon-shibuya`、`maki-nishikino`。未找到时返回 `404 NOT_FOUND`。
+
+角色图片字段：
+
+- `avatarUrl`：萌娘百科角色页立绘或主要角色图。
+- `avatarIconUrl`：萌娘百科 `Name_*_icon*.png` 系列头像小图，适合列表、机器人消息卡片和轻量 UI 使用。
+- `avatarIconFilename`：头像小图原始文件名，便于调用方做缓存或排查来源。
+
+### `GET /v1/birthdays/today`
+
+获取指定时区当天生日角色。
+
+查询参数：
+
+- `tz`：IANA 时区名，默认 `Asia/Shanghai`。例如 `Asia/Tokyo`、`Asia/Shanghai`。
+
+如果 `tz` 不是有效时区，返回 `400 INVALID_TIMEZONE`。
+
+### `GET /v1/events`
+
+获取规范化活动列表。活动会从多个来源聚合并去重，按开始时间升序返回。
+
+查询参数：
+
+- `from`：起始时间，支持 `YYYY-MM-DD` 或完整 ISO 时间。
+- `to`：结束时间，支持 `YYYY-MM-DD` 或完整 ISO 时间。
+- `series`：按企划/团体筛选，例如 `Liella`、`蓮ノ空`、`虹ヶ咲`。
+- `category`：活动类型。常用值为 `live`、`stream`、`event`。
+- `source`：按来源筛选。常用值为 `official-schedule`、`official-news`、`rsshub`、`llch-timeline`。
+
+说明：
+
+- `official-schedule` 和 `official-news` 是官方来源。
+- `llch-timeline` 来自 `ll-ch.com/timeline.html`，覆盖近期线上直播、演唱会、FMT、生放送等活动，时效性更强。
+- `rsshub` 是结构化 fallback，建议生产环境接自建 RSSHub。
+
+### `GET /v1/events/:id`
+
+获取单个活动详情。`:id` 使用 `/v1/events` 返回的 id。未找到时返回 `404 NOT_FOUND`。
+
+活动字段说明：
+
+- `title`：活动标题。
+- `series`：关联企划或团体。
+- `category`：活动类型。
+- `startAt` / `endAt`：开始/结束时间，保留来源时区偏移。
+- `timezone`：来源标注时区，例如 `Asia/Tokyo` 或 `Asia/Shanghai`。
+- `venue`：场馆或来源标注地点，可能为空。
+- `performers`：出演者，来源可解析时返回。
+- `source` / `sourceUrl`：规范化来源和原始链接。
+
+### `GET /v1/cards/random`
+
+预留随机卡面接口。本版本不会返回伪数据；未接入的游戏返回 `501 NOT_IMPLEMENTED`。
+
+查询参数：
+
+- `game`：必填，取值 `sif`、`sifas`、`sif2`。
+- `character`：预留角色筛选参数。
+- `rarity`：预留稀有度筛选参数。
 
 卡面接口在 `0.1` 版本只预留接口形状；在稳定卡面源适配器启用前，会返回 `501 NOT_IMPLEMENTED`。
+
+## 示例请求
+
+线上示例地址：
+
+```text
+http://llapi.shiro.team/
+```
+
+常用请求：
+
+```text
+http://llapi.shiro.team/v1/characters?q=香音
+http://llapi.shiro.team/v1/characters/kanon-shibuya
+http://llapi.shiro.team/v1/birthdays/today?tz=Asia/Shanghai
+http://llapi.shiro.team/v1/events?from=2026-05-01&to=2026-05-31
+http://llapi.shiro.team/v1/events?category=live
+http://llapi.shiro.team/v1/events?source=llch-timeline&category=live
+http://llapi.shiro.team/v1/cards/random?game=sif2
+```
+
+角色响应示例字段：
+
+```json
+{
+  "data": {
+    "id": "kanon-shibuya",
+    "names": { "zhHans": "涩谷香音", "ja": "澁谷かのん" },
+    "avatarUrl": "https://storage.moegirl.org.cn/moegirl/commons/3/34/...",
+    "avatarIconUrl": "https://storage.moegirl.org.cn/moegirl/commons/2/2e/Name_kanon_icon.png!/fw/80?v=20200804045109",
+    "avatarIconFilename": "Name_kanon_icon.png"
+  },
+  "meta": {}
+}
+```
 
 ## 数据源
 
 - 角色资料、生日、头像、页面来源：萌娘百科角色页。
-- 活动：LoveLive 官方日程和新闻，RSSHub 路由作为备用结构化源。
+- 头像小图：萌娘百科 `Name_*_icon*.png` 文件，参考 `lovelive_schedule` 插件的 `avatar_filename` / `avatar_url` 做法，并用当前萌娘百科模板页中的可访问图片地址更新。
+- 活动：LoveLive 官方日程和新闻、LL-CH 近期线上活动时间线，RSSHub 路由作为备用结构化源。
 - SIF 卡面候选源：School Idol Tomodachi。
 - SIFAS/SIF2 卡面候选源：Idol Story。
 
