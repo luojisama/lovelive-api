@@ -1,0 +1,492 @@
+[
+  {
+    "id": "honoka-kosaka",
+    "names": { "zhHans": "高坂穗乃果", "ja": "高坂穂乃果", "en": "Honoka Kosaka", "romaji": "Kosaka Honoka", "aliases": ["穗乃果", "Honoka"] },
+    "group": "μ's",
+    "series": "LoveLive!",
+    "birthday": { "month": 8, "day": 3, "text": "8月3日" },
+    "color": { "name": "橙色", "originalName": "オレンジ", "hex": "#f38500" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/高坂穗乃果",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "eli-ayase",
+    "names": { "zhHans": "绚濑绘里", "ja": "絢瀬絵里", "en": "Eli Ayase", "romaji": "Ayase Eli", "aliases": ["绘里", "Eli"] },
+    "group": "μ's",
+    "series": "LoveLive!",
+    "birthday": { "month": 10, "day": 21, "text": "10月21日" },
+    "color": { "name": "水蓝色", "originalName": "水色", "hex": "#7aeeff" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/绚濑绘里",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "kotori-minami",
+    "names": { "zhHans": "南小鸟", "ja": "南ことり", "en": "Kotori Minami", "romaji": "Minami Kotori", "aliases": ["小鸟", "Kotori"] },
+    "group": "μ's",
+    "series": "LoveLive!",
+    "birthday": { "month": 9, "day": 12, "text": "9月12日" },
+    "color": { "name": "白色", "originalName": "白", "hex": "#cebfbf" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/南小鸟",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "umi-sonoda",
+    "names": { "zhHans": "园田海未", "ja": "園田海未", "en": "Umi Sonoda", "romaji": "Sonoda Umi", "aliases": ["海未", "Umi"] },
+    "group": "μ's",
+    "series": "LoveLive!",
+    "birthday": { "month": 3, "day": 15, "text": "3月15日" },
+    "color": { "name": "蓝色", "originalName": "青", "hex": "#1769ff" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/园田海未",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "rin-hoshizora",
+    "names": { "zhHans": "星空凛", "ja": "星空凛", "en": "Rin Hoshizora", "romaji": "Hoshizora Rin", "aliases": ["凛", "Rin"] },
+    "group": "μ's",
+    "series": "LoveLive!",
+    "birthday": { "month": 11, "day": 1, "text": "11月1日" },
+    "color": { "name": "黄色", "originalName": "黄色", "hex": "#fff832" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/星空凛",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "maki-nishikino",
+    "names": { "zhHans": "西木野真姬", "ja": "西木野真姫", "en": "Maki Nishikino", "romaji": "Nishikino Maki", "aliases": ["真姬", "Maki"] },
+    "group": "μ's",
+    "series": "LoveLive!",
+    "birthday": { "month": 4, "day": 19, "text": "4月19日" },
+    "color": { "name": "红色", "originalName": "赤", "hex": "#ff503e" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/西木野真姬",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "nozomi-tojo",
+    "names": { "zhHans": "东条希", "ja": "東條希", "en": "Nozomi Tojo", "romaji": "Tojo Nozomi", "aliases": ["希", "Nozomi"] },
+    "group": "μ's",
+    "series": "LoveLive!",
+    "birthday": { "month": 6, "day": 9, "text": "6月9日" },
+    "color": { "name": "紫罗兰色", "originalName": "バイオレット", "hex": "#c455f6" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/东条希",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "hanayo-koizumi",
+    "names": { "zhHans": "小泉花阳", "ja": "小泉花陽", "en": "Hanayo Koizumi", "romaji": "Koizumi Hanayo", "aliases": ["花阳", "Hanayo"] },
+    "group": "μ's",
+    "series": "LoveLive!",
+    "birthday": { "month": 1, "day": 17, "text": "1月17日" },
+    "color": { "name": "绿色", "originalName": "グリーン", "hex": "#6ae673" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/小泉花阳",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "nico-yazawa",
+    "names": { "zhHans": "矢泽妮可", "ja": "矢澤にこ", "en": "Nico Yazawa", "romaji": "Yazawa Nico", "aliases": ["妮可", "Nico"] },
+    "group": "μ's",
+    "series": "LoveLive!",
+    "birthday": { "month": 7, "day": 22, "text": "7月22日" },
+    "color": { "name": "粉色", "originalName": "ピンク", "hex": "#ff4f91" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/矢泽妮可",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "chika-takami",
+    "names": { "zhHans": "高海千歌", "ja": "高海千歌", "en": "Chika Takami", "romaji": "Takami Chika", "aliases": ["千歌", "Chika"] },
+    "group": "Aqours",
+    "series": "LoveLive! Sunshine!!",
+    "birthday": { "month": 8, "day": 1, "text": "8月1日" },
+    "color": { "name": "蜜柑色", "originalName": "みかん色", "hex": "#ff9547" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/高海千歌",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "riko-sakurauchi",
+    "names": { "zhHans": "樱内梨子", "ja": "桜内梨子", "en": "Riko Sakurauchi", "romaji": "Sakurauchi Riko", "aliases": ["梨子", "Riko"] },
+    "group": "Aqours",
+    "series": "LoveLive! Sunshine!!",
+    "birthday": { "month": 9, "day": 19, "text": "9月19日" },
+    "color": { "name": "樱花粉色", "originalName": "サクラピンク", "hex": "#ff9eac" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/樱内梨子",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "kanan-matsuura",
+    "names": { "zhHans": "松浦果南", "ja": "松浦果南", "en": "Kanan Matsuura", "romaji": "Matsuura Kanan", "aliases": ["果南", "Kanan"] },
+    "group": "Aqours",
+    "series": "LoveLive! Sunshine!!",
+    "birthday": { "month": 2, "day": 10, "text": "2月10日" },
+    "color": { "name": "祖母绿色", "originalName": "エメラルドグリーン", "hex": "#27c1b7" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/松浦果南",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "dia-kurosawa",
+    "names": { "zhHans": "黑泽黛雅", "ja": "黒澤ダイヤ", "en": "Dia Kurosawa", "romaji": "Kurosawa Dia", "aliases": ["黛雅", "Dia"] },
+    "group": "Aqours",
+    "series": "LoveLive! Sunshine!!",
+    "birthday": { "month": 1, "day": 1, "text": "1月1日" },
+    "color": { "name": "红色", "originalName": "レッド", "hex": "#db0839" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/黑泽黛雅",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "you-watanabe",
+    "names": { "zhHans": "渡边曜", "ja": "渡辺曜", "en": "You Watanabe", "romaji": "Watanabe You", "aliases": ["曜", "You"] },
+    "group": "Aqours",
+    "series": "LoveLive! Sunshine!!",
+    "birthday": { "month": 4, "day": 17, "text": "4月17日" },
+    "color": { "name": "亮蓝色", "originalName": "ライトブルー", "hex": "#66c0ff" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/渡边曜",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "yoshiko-tsushima",
+    "names": { "zhHans": "津岛善子", "ja": "津島善子", "en": "Yoshiko Tsushima", "romaji": "Tsushima Yoshiko", "aliases": ["善子", "夜羽", "Yohane", "Yoshiko"] },
+    "group": "Aqours",
+    "series": "LoveLive! Sunshine!!",
+    "birthday": { "month": 7, "day": 13, "text": "7月13日" },
+    "color": { "name": "白色", "originalName": "ホワイト", "hex": "#c1cad4" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/津岛善子",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "hanamaru-kunikida",
+    "names": { "zhHans": "国木田花丸", "ja": "国木田花丸", "en": "Hanamaru Kunikida", "romaji": "Kunikida Hanamaru", "aliases": ["花丸", "Hanamaru"] },
+    "group": "Aqours",
+    "series": "LoveLive! Sunshine!!",
+    "birthday": { "month": 3, "day": 4, "text": "3月4日" },
+    "color": { "name": "黄色", "originalName": "イエロー", "hex": "#ffd010" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/国木田花丸",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "mari-ohara",
+    "names": { "zhHans": "小原鞠莉", "ja": "小原鞠莉", "en": "Mari Ohara", "romaji": "Ohara Mari", "aliases": ["鞠莉", "Mari"] },
+    "group": "Aqours",
+    "series": "LoveLive! Sunshine!!",
+    "birthday": { "month": 6, "day": 13, "text": "6月13日" },
+    "color": { "name": "紫罗兰色", "originalName": "ヴァイオレット", "hex": "#c252c6" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/小原鞠莉",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "ruby-kurosawa",
+    "names": { "zhHans": "黑泽露比", "ja": "黒澤ルビィ", "en": "Ruby Kurosawa", "romaji": "Kurosawa Ruby", "aliases": ["露比", "Ruby"] },
+    "group": "Aqours",
+    "series": "LoveLive! Sunshine!!",
+    "birthday": { "month": 9, "day": 21, "text": "9月21日" },
+    "color": { "name": "粉色", "originalName": "ピンク", "hex": "#ff6fbe" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/黑泽露比",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "ayumu-uehara",
+    "names": { "zhHans": "上原步梦", "ja": "上原歩夢", "en": "Ayumu Uehara", "romaji": "Uehara Ayumu", "aliases": ["步梦", "Ayumu"] },
+    "group": "虹咲学园学园偶像同好会",
+    "series": "LoveLive! Nijigasaki High School Idol Club",
+    "birthday": { "month": 3, "day": 1, "text": "3月1日" },
+    "color": { "name": "浅粉色", "originalName": "ライトピンク", "hex": "#ed7d95" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/上原步梦",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "kasumi-nakasu",
+    "names": { "zhHans": "中须霞", "ja": "中須かすみ", "en": "Kasumi Nakasu", "romaji": "Nakasu Kasumi", "aliases": ["霞", "Kasumi"] },
+    "group": "虹咲学园学园偶像同好会",
+    "series": "LoveLive! Nijigasaki High School Idol Club",
+    "birthday": { "month": 1, "day": 23, "text": "1月23日" },
+    "color": { "name": "蜡笔黄色", "originalName": "パステルイエロー", "hex": "#e7d600" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/中须霞",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "shizuku-osaka",
+    "names": { "zhHans": "樱坂雫", "ja": "桜坂しずく", "en": "Shizuku Osaka", "romaji": "Osaka Shizuku", "aliases": ["雫", "Shizuku"] },
+    "group": "虹咲学园学园偶像同好会",
+    "series": "LoveLive! Nijigasaki High School Idol Club",
+    "birthday": { "month": 4, "day": 3, "text": "4月3日" },
+    "color": { "name": "浅蓝色", "originalName": "ライトブルー", "hex": "#01b7ed" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/樱坂雫",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "kanon-shibuya",
+    "names": { "zhHans": "涩谷香音", "ja": "澁谷かのん", "en": "Kanon Shibuya", "romaji": "Shibuya Kanon", "aliases": ["香音", "Kanon"] },
+    "group": "Liella!",
+    "series": "LoveLive! Superstar!!",
+    "birthday": { "month": 5, "day": 1, "text": "5月1日" },
+    "color": { "name": "金盏花色", "originalName": "マリーゴールド", "hex": "#ff7f27" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/涩谷香音",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "keke-tang",
+    "names": { "zhHans": "唐可可", "ja": "唐可可", "en": "Keke Tang", "romaji": "Tang Keke", "aliases": ["可可", "Keke"] },
+    "group": "Liella!",
+    "series": "LoveLive! Superstar!!",
+    "birthday": { "month": 7, "day": 17, "text": "7月17日" },
+    "color": { "name": "蜡笔蓝色", "originalName": "パステルブルー", "hex": "#a0fff9" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/唐可可",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "chisato-arashi",
+    "names": { "zhHans": "岚千砂都", "ja": "嵐千砂都", "en": "Chisato Arashi", "romaji": "Arashi Chisato", "aliases": ["千砂都", "Chisato"] },
+    "group": "Liella!",
+    "series": "LoveLive! Superstar!!",
+    "birthday": { "month": 2, "day": 25, "text": "2月25日" },
+    "color": { "name": "桃粉色", "originalName": "ピーチピンク", "hex": "#ff6e90" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/岚千砂都",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "sumire-heanna",
+    "names": { "zhHans": "平安名堇", "ja": "平安名すみれ", "en": "Sumire Heanna", "romaji": "Heanna Sumire", "aliases": ["堇", "Sumire"] },
+    "group": "Liella!",
+    "series": "LoveLive! Superstar!!",
+    "birthday": { "month": 9, "day": 28, "text": "9月28日" },
+    "color": { "name": "蜜瓜绿色", "originalName": "メロングリーン", "hex": "#74f466" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/平安名堇",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "ren-hazuki",
+    "names": { "zhHans": "叶月恋", "ja": "葉月恋", "en": "Ren Hazuki", "romaji": "Hazuki Ren", "aliases": ["恋", "Ren"] },
+    "group": "Liella!",
+    "series": "LoveLive! Superstar!!",
+    "birthday": { "month": 11, "day": 24, "text": "11月24日" },
+    "color": { "name": "宝石蓝色", "originalName": "サファイアブルー", "hex": "#0000a0" },
+    "avatarUrl": null,
+    "sourceUrl": "https://llwiki.org/zh/叶月恋",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "kaho-hinoshita",
+    "names": { "zhHans": "日野下花帆", "ja": "日野下花帆", "en": "Kaho Hinoshita", "romaji": "Hinoshita Kaho", "aliases": ["花帆", "Kaho"] },
+    "group": "莲之空女学院学园偶像俱乐部",
+    "series": "Hasunosora Jogakuin School Idol Club",
+    "birthday": { "month": 5, "day": 22, "text": "5月22日" },
+    "color": { "name": "太阳色", "originalName": "おひさま色", "hex": "#f8b500" },
+    "avatarUrl": null,
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/member/01/",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "蓮ノ空官方成员页", "url": "https://www.lovelive-anime.jp/hasunosora/member/01/" }
+    ]
+  },
+  {
+    "id": "sayaka-murano",
+    "names": { "zhHans": "村野沙耶香", "ja": "村野さやか", "en": "Sayaka Murano", "romaji": "Murano Sayaka", "aliases": ["沙耶香", "Sayaka"] },
+    "group": "莲之空女学院学园偶像俱乐部",
+    "series": "Hasunosora Jogakuin School Idol Club",
+    "birthday": { "month": 1, "day": 13, "text": "1月13日" },
+    "color": { "name": "冰蓝色", "originalName": "氷青色", "hex": "#5383c3" },
+    "avatarUrl": null,
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/member/02/",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "kozue-otomune",
+    "names": { "zhHans": "乙宗梢", "ja": "乙宗梢", "en": "Kozue Otomune", "romaji": "Otomune Kozue", "aliases": ["梢", "Kozue"] },
+    "group": "莲之空女学院学园偶像俱乐部",
+    "series": "Hasunosora Jogakuin School Idol Club",
+    "birthday": { "month": 6, "day": 15, "text": "6月15日" },
+    "color": { "name": "人鱼绿色", "originalName": "マーメイドグリーン", "hex": "#68be8d" },
+    "avatarUrl": null,
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/member/03/",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "rurino-osawa",
+    "names": { "zhHans": "大泽瑠璃乃", "ja": "大沢瑠璃乃", "en": "Rurino Osawa", "romaji": "Osawa Rurino", "aliases": ["瑠璃乃", "Rurino"] },
+    "group": "莲之空女学院学园偶像俱乐部",
+    "series": "Hasunosora Jogakuin School Idol Club",
+    "birthday": { "month": 8, "day": 31, "text": "8月31日" },
+    "color": { "name": "瑠璃粉色", "originalName": "瑠璃ピンク", "hex": "#e7609e" },
+    "avatarUrl": null,
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/member/05/",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "ginko-momose",
+    "names": { "zhHans": "百生吟子", "ja": "百生吟子", "en": "Ginko Momose", "romaji": "Momose Ginko", "aliases": ["吟子", "Ginko"] },
+    "group": "莲之空女学院学园偶像俱乐部",
+    "series": "Hasunosora Jogakuin School Idol Club",
+    "birthday": { "month": 10, "day": 20, "text": "10月20日" },
+    "color": { "name": "天之原色", "originalName": "天の原色", "hex": "#a2d7dd" },
+    "avatarUrl": null,
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/member/07/",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "蓮ノ空官方成员页", "url": "https://www.lovelive-anime.jp/hasunosora/member/07/" }
+    ]
+  },
+  {
+    "id": "kosuzu-kachimachi",
+    "names": { "zhHans": "徒町小铃", "ja": "徒町小鈴", "en": "Kosuzu Kachimachi", "romaji": "Kachimachi Kosuzu", "aliases": ["小铃", "Kosuzu"] },
+    "group": "莲之空女学院学园偶像俱乐部",
+    "series": "Hasunosora Jogakuin School Idol Club",
+    "birthday": { "month": 2, "day": 28, "text": "2月28日" },
+    "color": { "name": "长庚星色", "originalName": "いちばん星色", "hex": "#fad764" },
+    "avatarUrl": null,
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/member/08/",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "LLWiki 生日列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列主要人物生日列表&variant=zh-hans" }
+    ]
+  },
+  {
+    "id": "hime-anyoji",
+    "names": { "zhHans": "安养寺姬芽", "ja": "安養寺姫芽", "en": "Hime Anyoji", "romaji": "Anyoji Hime", "aliases": ["姬芽", "Hime"] },
+    "group": "莲之空女学院学园偶像俱乐部",
+    "series": "Hasunosora Jogakuin School Idol Club",
+    "birthday": { "month": 9, "day": 24, "text": "9月24日" },
+    "color": { "name": "糖果紫色", "originalName": "シュガーパープル", "hex": "#9d8de2" },
+    "avatarUrl": null,
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/member/09/",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "蓮ノ空官方成员页", "url": "https://www.lovelive-anime.jp/hasunosora/member/09/" }
+    ]
+  },
+  {
+    "id": "ceras-yanagida-lilienfeld",
+    "names": { "zhHans": "塞拉斯柳田利林菲尔德", "ja": "セラス柳田リリエンフェルト", "en": "Ceras Yanagida Lilienfeld", "romaji": "Ceras Yanagida Lilienfeld", "aliases": ["塞拉斯", "Ceras"] },
+    "group": "莲之空女学院学园偶像俱乐部",
+    "series": "Hasunosora Jogakuin School Idol Club",
+    "birthday": { "month": 6, "day": 26, "text": "6月26日" },
+    "color": { "name": "上升猩红", "originalName": "ライズスカーレット", "hex": "#f56455" },
+    "avatarUrl": null,
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/member/10/",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "蓮ノ空官方成员页", "url": "https://www.lovelive-anime.jp/hasunosora/member/10/" }
+    ]
+  },
+  {
+    "id": "izumi-katsuragi",
+    "names": { "zhHans": "桂城泉", "ja": "桂城泉", "en": "Izumi Katsuragi", "romaji": "Katsuragi Izumi", "aliases": ["泉", "Izumi"] },
+    "group": "莲之空女学院学园偶像俱乐部",
+    "series": "Hasunosora Jogakuin School Idol Club",
+    "birthday": { "month": 12, "day": 1, "text": "12月1日" },
+    "color": { "name": "骑士绿", "originalName": "シュヴァリエグリーン", "hex": "#1ebecd" },
+    "avatarUrl": null,
+    "sourceUrl": "https://www.lovelive-anime.jp/hasunosora/member/11/",
+    "sources": [
+      { "name": "LLWiki 应援色列表", "url": "https://llwiki.org/mediawiki/index.php?title=LoveLive!系列應援色列表&variant=zh-hans" },
+      { "name": "蓮ノ空官方成员页", "url": "https://www.lovelive-anime.jp/hasunosora/member/11/" }
+    ]
+  }
+]

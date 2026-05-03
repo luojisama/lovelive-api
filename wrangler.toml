@@ -1,0 +1,29 @@
+name = "lovelive-api"
+main = "src/index.ts"
+compatibility_date = "2026-05-03"
+
+triggers = { crons = ["0 */3 * * *"] }
+
+[vars]
+UPSTREAM_MODE = "fixture"
+RSSHUB_BASE_URL = "https://rsshub.app"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "local_lovelive_api_cache"
+
+[env.staging.vars]
+UPSTREAM_MODE = "live"
+RSSHUB_BASE_URL = "https://rsshub.app"
+
+[[env.staging.kv_namespaces]]
+binding = "CACHE"
+id = "replace_with_staging_kv_namespace_id"
+
+[env.production.vars]
+UPSTREAM_MODE = "live"
+RSSHUB_BASE_URL = "https://rsshub.app"
+
+[[env.production.kv_namespaces]]
+binding = "CACHE"
+id = "replace_with_production_kv_namespace_id"
