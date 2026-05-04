@@ -17,37 +17,47 @@ interface CharacterQuery {
 export async function getCharacters(env: Env, query: CharacterQuery = {}, forceRefresh = false): Promise<DataResult<Character[]>> {
   const mode = env.UPSTREAM_MODE === "live" ? "live" : "fixture";
   const cached = await readCached<Character[]>(env, CACHE_KEY);
-  if (!forceRefresh && cached && isFresh(cached)) {
+
+  if (!forceRefresh && cached) {
     const data = filterCharacters(applyMoegirlMetadata(cached.data), query);
-    return { data, meta: { count: data.length, source: cached.source, refreshedAt: cached.refreshedAt, upstreamMode: mode } };
-  }
-
-  if (mode === "fixture") {
-    const data = applyMoegirlMetadata(fixtureCharacters as Character[]);
-    const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "fixture-moegirl");
-    const filtered = filterCharacters(data, query);
-    return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
-  }
-
-  try {
-    const data = await fetchMoegirlCharacters(fixtureCharacters as Character[]);
-    const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "moegirl");
-    const filtered = filterCharacters(data, query);
-    return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
-  } catch {
-    const fallback = applyMoegirlMetadata(cached?.data ?? (fixtureCharacters as Character[]));
-    const filtered = filterCharacters(fallback, query);
     return {
-      data: filtered,
+      data,
       meta: {
-        count: filtered.length,
-        source: cached?.source ?? "fixture",
-        refreshedAt: cached?.refreshedAt,
-        stale: true,
-        upstreamMode: mode
+        count: data.length,
+        source: cached.source,
+        refreshedAt: cached.refreshedAt,
+        upstreamMode: mode,
+        ...(isFresh(cached) ? {} : { stale: true })
       }
     };
   }
+
+  if (forceRefresh && mode === "live") {
+    try {
+      const data = await fetchMoegirlCharacters(fixtureCharacters as Character[]);
+      const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "moegirl");
+      const filtered = filterCharacters(data, query);
+      return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
+    } catch {
+      const fallback = applyMoegirlMetadata(cached?.data ?? (fixtureCharacters as Character[]));
+      const filtered = filterCharacters(fallback, query);
+      return {
+        data: filtered,
+        meta: {
+          count: filtered.length,
+          source: cached?.source ?? "fixture-moegirl",
+          refreshedAt: cached?.refreshedAt,
+          stale: true,
+          upstreamMode: mode
+        }
+      };
+    }
+  }
+
+  const data = applyMoegirlMetadata(fixtureCharacters as Character[]);
+  const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "fixture-moegirl");
+  const filtered = filterCharacters(data, query);
+  return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
 }
 
 export async function getCharacterById(env: Env, id: string): Promise<DataResult<Character | undefined>> {

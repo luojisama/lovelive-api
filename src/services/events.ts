@@ -22,45 +22,55 @@ interface EventQuery {
 export async function getEvents(env: Env, query: EventQuery = {}, forceRefresh = false): Promise<DataResult<EventItem[]>> {
   const mode = env.UPSTREAM_MODE === "live" ? "live" : "fixture";
   const cached = await readCached<EventItem[]>(env, CACHE_KEY);
-  if (!forceRefresh && cached && isFresh(cached)) {
+
+  if (!forceRefresh && cached) {
     const data = filterEvents(cached.data, query);
-    return { data, meta: { count: data.length, source: cached.source, refreshedAt: cached.refreshedAt, upstreamMode: mode } };
-  }
-
-  if (mode === "fixture") {
-    const data = fixtureEvents as EventItem[];
-    const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "fixture");
-    const filtered = filterEvents(data, query);
-    return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
-  }
-
-  try {
-    const sourceResults = await Promise.allSettled([
-      fetchOfficialSchedule(),
-      fetchLlchTimelineEvents(),
-      fetchLlchCvToChinaEvents(),
-      fetchOfficialNewsEvents(),
-      fetchRsshubEvents(env)
-    ]);
-    const data = dedupeEvents(sourceResults.flatMap((result) => (result.status === "fulfilled" ? result.value : [])));
-    if (data.length === 0) throw new Error("no live events parsed");
-    const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "live");
-    const filtered = filterEvents(data, query);
-    return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
-  } catch {
-    const fallback = cached?.data ?? (fixtureEvents as EventItem[]);
-    const filtered = filterEvents(fallback, query);
     return {
-      data: filtered,
+      data,
       meta: {
-        count: filtered.length,
-        source: cached?.source ?? "fixture",
-        refreshedAt: cached?.refreshedAt,
-        stale: true,
-        upstreamMode: mode
+        count: data.length,
+        source: cached.source,
+        refreshedAt: cached.refreshedAt,
+        upstreamMode: mode,
+        ...(isFresh(cached) ? {} : { stale: true })
       }
     };
   }
+
+  if (forceRefresh && mode === "live") {
+    try {
+      const sourceResults = await Promise.allSettled([
+        fetchOfficialSchedule(),
+        fetchLlchTimelineEvents(),
+        fetchLlchCvToChinaEvents(),
+        fetchOfficialNewsEvents(),
+        fetchRsshubEvents(env)
+      ]);
+      const data = dedupeEvents(sourceResults.flatMap((result) => (result.status === "fulfilled" ? result.value : [])));
+      if (data.length === 0) throw new Error("no live events parsed");
+      const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "live");
+      const filtered = filterEvents(data, query);
+      return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
+    } catch {
+      const fallback = cached?.data ?? (fixtureEvents as EventItem[]);
+      const filtered = filterEvents(fallback, query);
+      return {
+        data: filtered,
+        meta: {
+          count: filtered.length,
+          source: cached?.source ?? "fixture",
+          refreshedAt: cached?.refreshedAt,
+          stale: true,
+          upstreamMode: mode
+        }
+      };
+    }
+  }
+
+  const data = fixtureEvents as EventItem[];
+  const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "fixture");
+  const filtered = filterEvents(data, query);
+  return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
 }
 
 export async function getEventById(env: Env, id: string): Promise<DataResult<EventItem | undefined>> {

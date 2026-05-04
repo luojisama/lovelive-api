@@ -21,38 +21,48 @@ interface MusicQuery {
 export async function getMusic(env: Env, query: MusicQuery = {}, forceRefresh = false): Promise<DataResult<MusicItem[]>> {
   const mode = env.UPSTREAM_MODE === "live" ? "live" : "fixture";
   const cached = await readCached<MusicItem[]>(env, CACHE_KEY);
-  if (!forceRefresh && cached && isFresh(cached)) {
+
+  if (!forceRefresh && cached) {
     const data = filterMusic(cached.data, query);
-    return { data, meta: { count: data.length, source: cached.source, refreshedAt: cached.refreshedAt, upstreamMode: mode } };
-  }
-
-  if (mode === "fixture") {
-    const data = fixtureMusic as MusicItem[];
-    const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "fixture");
-    const filtered = filterMusic(data, query);
-    return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
-  }
-
-  try {
-    const data = await fetchOfficialMusic();
-    if (data.length === 0) throw new Error("no music parsed");
-    const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "official-music");
-    const filtered = filterMusic(data, query);
-    return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
-  } catch {
-    const fallback = cached?.data ?? (fixtureMusic as MusicItem[]);
-    const filtered = filterMusic(fallback, query);
     return {
-      data: filtered,
+      data,
       meta: {
-        count: filtered.length,
-        source: cached?.source ?? "fixture",
-        refreshedAt: cached?.refreshedAt,
-        stale: true,
-        upstreamMode: mode
+        count: data.length,
+        source: cached.source,
+        refreshedAt: cached.refreshedAt,
+        upstreamMode: mode,
+        ...(isFresh(cached) ? {} : { stale: true })
       }
     };
   }
+
+  if (forceRefresh && mode === "live") {
+    try {
+      const data = await fetchOfficialMusic();
+      if (data.length === 0) throw new Error("no music parsed");
+      const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "official-music");
+      const filtered = filterMusic(data, query);
+      return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
+    } catch {
+      const fallback = cached?.data ?? (fixtureMusic as MusicItem[]);
+      const filtered = filterMusic(fallback, query);
+      return {
+        data: filtered,
+        meta: {
+          count: filtered.length,
+          source: cached?.source ?? "fixture",
+          refreshedAt: cached?.refreshedAt,
+          stale: true,
+          upstreamMode: mode
+        }
+      };
+    }
+  }
+
+  const data = fixtureMusic as MusicItem[];
+  const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "fixture");
+  const filtered = filterMusic(data, query);
+  return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
 }
 
 export async function getMusicById(env: Env, id: string): Promise<DataResult<MusicItem | undefined>> {
