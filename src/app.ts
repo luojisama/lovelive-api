@@ -4,6 +4,7 @@ import { fail, notFound, ok } from "./utils/api";
 import { getCharacterById, getCharacters, getTodayBirthdays } from "./services/characters";
 import { getEventById, getEvents } from "./services/events";
 import { getMusic, getMusicById } from "./services/music";
+import { proxyMusicCover, withMusicCoverProxy } from "./services/images";
 import { assertCardGame } from "./adapters/schoolidoSif";
 import { reservedCardMessage } from "./services/cards";
 
@@ -13,7 +14,7 @@ app.get("/", (c) =>
   ok({
     name: "lovelive-api",
     version: "0.1.0",
-    endpoints: ["/v1/characters", "/v1/birthdays/today", "/v1/events", "/v1/music", "/v1/cards/random"]
+    endpoints: ["/v1/characters", "/v1/birthdays/today", "/v1/events", "/v1/music", "/v1/images/music-cover", "/v1/cards/random"]
   })
 );
 
@@ -71,14 +72,18 @@ app.get("/v1/music", async (c) => {
     to: c.req.query("to"),
     source: c.req.query("source")
   });
-  return ok(result.data, result.meta);
+  const origin = new URL(c.req.url).origin;
+  return ok(result.data.map((item) => withMusicCoverProxy(item, origin)), result.meta);
 });
 
 app.get("/v1/music/:id", async (c) => {
   const result = await getMusicById(c.env, c.req.param("id"));
   if (!result.data) return notFound("未找到音乐");
-  return ok(result.data, result.meta);
+  const origin = new URL(c.req.url).origin;
+  return ok(withMusicCoverProxy(result.data, origin), result.meta);
 });
+
+app.get("/v1/images/music-cover", (c) => proxyMusicCover(c.req.raw));
 
 app.get("/v1/cards/random", (c) => {
   try {

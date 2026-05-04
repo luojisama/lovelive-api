@@ -5,6 +5,7 @@ import { parseMoegirlCharacterPage } from "../src/adapters/moegirlCharacters";
 import { parseLegacyOfficialMusicPage, parseOfficialMusicDetail } from "../src/adapters/officialMusic";
 import { parseOfficialScheduleHtml } from "../src/adapters/officialSchedule";
 import { dedupeEvents } from "../src/services/events";
+import { parseBnmlSearchResults } from "../src/services/images";
 
 describe("moegirl parsers", () => {
   it("parses birthday, color and avatar from a character page", () => {
@@ -104,6 +105,21 @@ describe("event parsing", () => {
 });
 
 describe("music parsing", () => {
+  it("parses BNML catalog search result covers", () => {
+    const results = parseBnmlSearchResults(`
+      <li><a href="https://catalog.bandainamcomusiclive.co.jp/release/72459/">
+        <div class="img"><img src="https://catalog.bandainamcomusiclive.co.jp/wp-content/uploads/2025/08/LACA-25170-1-scaled.jpg" alt=""></div>
+        <div class="time">2025.05.28</div>
+        <h3 class="title">Aspire【オリジナル盤】</h3>
+      </a></li>
+    `);
+    expect(results).toHaveLength(1);
+    expect(results[0].releaseUrl).toBe("https://catalog.bandainamcomusiclive.co.jp/release/72459/");
+    expect(results[0].imageUrl).toContain("LACA-25170-1-scaled.jpg");
+    expect(results[0].releaseDate).toBe("2025-05-28");
+    expect(results[0].title).toBe("Aspire【オリジナル盤】");
+  });
+
   it("parses official music detail into tracks", () => {
     const tracks = parseOfficialMusicDetail(
       `

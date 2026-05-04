@@ -44,6 +44,7 @@ pnpm seed:local
 | `GET /v1/birthdays/today` | 查今天生日角色 |
 | `GET /v1/events` | 查官方/补充源聚合活动 |
 | `GET /v1/music` | 查官方音乐、封面、发售日、所属专辑 |
+| `GET /v1/images/music-cover` | 音乐封面代理，自动回落官方备用源 |
 | `GET /v1/cards/random` | 预留 SIF/SIFAS/SIF2 随机卡面 |
 
 ### `GET /v1/characters`
@@ -119,7 +120,9 @@ pnpm seed:local
 - `series`：所属企划或团体。
 - `albumTitle`：所属专辑、单曲或音乐商品名。
 - `albumType`：商品类型，例如 `CD`。
-- `coverUrl`：官方封面图。
+- `coverUrl`：可直接展示的封面代理 URL，优先返回原始官方图；原始图失效时自动回落到 BNML Catalog 官方封面。
+- `coverOriginalUrl`：上游页面解析到的原始封面图。
+- `coverSourceUrl`：封面对应的音乐来源页面。
 - `releaseDate`：发售日期，格式 `YYYY-MM-DD`。
 - `sourceUrl`：官方音乐详情页。
 
@@ -137,6 +140,18 @@ pnpm seed:local
 ### `GET /v1/music/:id`
 
 获取单首歌详情。`:id` 使用 `/v1/music` 返回的 id。未找到时返回 `404 NOT_FOUND`。
+
+### `GET /v1/images/music-cover`
+
+获取音乐封面图。一般不需要手动拼这个接口，直接使用 `/v1/music` 返回的 `coverUrl` 即可。
+
+查询参数：
+
+- `url`：原始封面 URL，可选。
+- `albumTitle`：专辑或单曲标题，可选。原图不可用时会用它搜索 BNML Catalog 官方封面。
+- `releaseDate`：发售日期，可选。用于在 BNML 搜索结果中优先匹配同日发行版本。
+
+该接口只代理白名单官方图片域名，并返回 `Access-Control-Allow-Origin: *`，方便浏览器、机器人和前端直接显示。
 
 ### `GET /v1/cards/random`
 
@@ -172,6 +187,7 @@ http://llapi.shiro.team/v1/music?q=爱上你万岁
 http://llapi.shiro.team/v1/music?q=愛してるばんざーい
 http://llapi.shiro.team/v1/music?q=Aspire
 http://llapi.shiro.team/v1/music?series=蓮ノ空&from=2025-01-01
+http://llapi.shiro.team/v1/images/music-cover?albumTitle=Aspire&releaseDate=2025-05-28
 http://llapi.shiro.team/v1/cards/random?game=sif2
 ```
 
@@ -196,6 +212,7 @@ http://llapi.shiro.team/v1/cards/random?game=sif2
 - 头像小图：萌娘百科 `Name_*_icon*.png` 文件，参考 `lovelive_schedule` 插件的 `avatar_filename` / `avatar_url` 做法，并用当前萌娘百科模板页中的可访问图片地址更新。
 - 活动：LoveLive 官方日程和新闻、LL-CH 近期线上活动时间线、LL-CH 声优访华活动页，RSSHub 路由作为备用结构化源。
 - 音乐：μ's 音乃木坂官方 release 页、Aqours 浦之星官方 CD 页、虹咲官方 CD 页、Liella! 官方音乐页、蓮ノ空官方音乐页。返回曲目时以官方页面的发售日、封面、收录曲为准。
+- 音乐封面备用源：Bandai Namco Music Live Catalog。当前 Liella! 官方 `image.php` 在部分场景会返回维护页 HTML；封面代理会自动用 BNML Catalog 的官方封面补齐。
 - SIF 卡面候选源：School Idol Tomodachi。
 - SIFAS/SIF2 卡面候选源：Idol Story。
 

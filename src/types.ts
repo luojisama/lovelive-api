@@ -68,6 +68,8 @@ export interface MusicItem {
   albumTitle: string;
   albumType?: string;
   coverUrl?: string;
+  coverOriginalUrl?: string;
+  coverSourceUrl?: string;
   releaseDate?: string;
   trackNumber?: number;
   source: string;

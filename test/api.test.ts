@@ -39,13 +39,14 @@ describe("api routes", () => {
   });
 
   it("filters music by query", async () => {
-    const response = await app.request("/v1/music?q=Aspire", {}, createTestEnv());
+    const response = await app.request("https://api.test/v1/music?q=Aspire", {}, createTestEnv());
     expect(response.status).toBe(200);
-    const json = await response.json() as { data: Array<{ title: string; albumTitle: string; coverUrl?: string }>; meta: { count: number } };
+    const json = await response.json() as { data: Array<{ title: string; albumTitle: string; coverUrl?: string; coverOriginalUrl?: string }>; meta: { count: number } };
     expect(json.meta.count).toBeGreaterThan(0);
     expect(json.data.some((item) => item.title === "Aspire")).toBe(true);
     expect(json.data[0].albumTitle).toBeTruthy();
-    expect(json.data[0].coverUrl).toBeTruthy();
+    expect(json.data[0].coverUrl).toContain("https://api.test/v1/images/music-cover");
+    expect(json.data[0].coverOriginalUrl).toBeTruthy();
   });
 
   it("filters music by common Chinese title aliases", async () => {
@@ -86,6 +87,45 @@ describe("api routes", () => {
       { q: "爱上你万岁" }
     );
     expect(result[0].id).toBe("original");
+  });
+
+  it("proxies music covers and falls back to BNML catalog images", async () => {
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = (async (input: RequestInfo | URL) => {
+      const url = typeof input === "string" || input instanceof URL ? new URL(input) : new URL(input.url);
+      if (url.hostname === "www.lovelive-anime.jp") {
+        return new Response("<html>maintenance</html>", { headers: { "content-type": "text/html; charset=utf-8" } });
+      }
+      if (url.hostname === "catalog.bandainamcomusiclive.co.jp" && url.pathname === "/") {
+        return new Response(
+          `
+          <li><a href="https://catalog.bandainamcomusiclive.co.jp/release/72459/">
+            <img src="https://catalog.bandainamcomusiclive.co.jp/wp-content/uploads/2025/08/LACA-25170-1-scaled.jpg" alt="">
+            <div class="time">2025.05.28</div>
+            <h3 class="title">Aspire【オリジナル盤】</h3>
+          </a></li>
+          `,
+          { headers: { "content-type": "text/html; charset=utf-8" } }
+        );
+      }
+      if (url.hostname === "catalog.bandainamcomusiclive.co.jp" && url.pathname.endsWith(".jpg")) {
+        return new Response("image-bytes", { headers: { "content-type": "image/jpeg" } });
+      }
+      return new Response("not found", { status: 404 });
+    }) as typeof fetch;
+
+    try {
+      const response = await app.request(
+        "/v1/images/music-cover?url=https%3A%2F%2Fwww.lovelive-anime.jp%2Fyuigaoka%2Fcommon%2Fapi%2Fimage.php%3Fimg_path%3D%2Fcover.jpeg&albumTitle=Liella!%203rd%E3%82%A2%E3%83%AB%E3%83%90%E3%83%A0%E3%80%8CAspire%E3%80%8D%E3%80%90%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%AB%E7%9B%A4%E3%80%91&releaseDate=2025-05-28",
+        {},
+        createTestEnv()
+      );
+      expect(response.status).toBe(200);
+      expect(response.headers.get("content-type")).toBe("image/jpeg");
+      expect(await response.text()).toBe("image-bytes");
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
   });
 
   it("returns reserved card endpoint as 501", async () => {
