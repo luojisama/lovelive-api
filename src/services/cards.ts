@@ -40,7 +40,8 @@ export async function getRandomCard(env: Env, query: CardQuery, forceRefresh = f
     const nextPool = appendUnique(pool, fresh, POOL_MAX_SIZE);
     await writeCached(env, cacheKey, nextPool, POOL_TTL_SECONDS, fresh.source);
     return { data: fresh, meta: { source: fresh.source, upstreamMode: mode } };
-  } catch {
+  } catch (error) {
+    console.warn(`[cards] upstream fetch failed for game=${query.game}`, error);
     if (pool.length > 0) {
       return {
         data: pool[Math.floor(Math.random() * pool.length)],

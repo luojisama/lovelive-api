@@ -1,4 +1,5 @@
 import type { MusicItem } from "../types";
+import { fail } from "../utils/api";
 import { fetchText } from "./upstream";
 import { decodeHtml, stripHtml } from "../utils/text";
 
@@ -53,10 +54,7 @@ export async function proxyMusicCover(request: Request): Promise<Response> {
   const releaseDate = requestUrl.searchParams.get("releaseDate") ?? undefined;
 
   if (!originalUrl && !albumTitle) {
-    return new Response(JSON.stringify({ error: { code: "INVALID_IMAGE_REQUEST", message: "url 或 albumTitle 至少需要一个" } }), {
-      status: 400,
-      headers: { "content-type": "application/json; charset=utf-8" }
-    });
+    return fail(400, "INVALID_IMAGE_REQUEST", "url 或 albumTitle 至少需要一个");
   }
 
   if (originalUrl) {
@@ -70,10 +68,7 @@ export async function proxyMusicCover(request: Request): Promise<Response> {
     if (fallback) return fallback;
   }
 
-  return new Response(JSON.stringify({ error: { code: "IMAGE_NOT_FOUND", message: "未找到可用封面图" } }), {
-    status: 502,
-    headers: { "content-type": "application/json; charset=utf-8" }
-  });
+  return fail(502, "IMAGE_NOT_FOUND", "未找到可用封面图");
 }
 
 export function parseBnmlSearchResults(html: string): BnmlSearchResult[] {
@@ -139,7 +134,7 @@ async function fetchAllowedImage(url: string): Promise<Response | undefined> {
   const cached = await cache?.match(request);
   if (cached) return addImageHeaders(cached);
 
-  const response = await fetch(request);
+  const response = await fetch(request, { signal: AbortSignal.timeout(8000) });
   const contentType = response.headers.get("content-type") ?? "";
   if (!response.ok || !contentType.toLowerCase().startsWith("image/")) return undefined;
 

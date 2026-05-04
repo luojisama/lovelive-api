@@ -43,7 +43,8 @@ export async function getMusic(env: Env, query: MusicQuery = {}, forceRefresh = 
       const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "official-music");
       const filtered = filterMusic(data, query);
       return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
-    } catch {
+    } catch (error) {
+      console.warn("[music] upstream refresh failed", error);
       const fallback = cached?.data ?? (fixtureMusic as MusicItem[]);
       const filtered = filterMusic(fallback, query);
       return {

@@ -38,7 +38,8 @@ export async function getCharacters(env: Env, query: CharacterQuery = {}, forceR
       const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "moegirl");
       const filtered = filterCharacters(data, query);
       return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
-    } catch {
+    } catch (error) {
+      console.warn("[characters] upstream refresh failed", error);
       const fallback = applyMoegirlMetadata(cached?.data ?? (fixtureCharacters as Character[]));
       const filtered = filterCharacters(fallback, query);
       return {
