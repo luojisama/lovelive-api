@@ -1,3 +1,5 @@
+const UPSTREAM_TIMEOUT_MS = 8000;
+
 export async function fetchText(url: string, ttlSeconds: number): Promise<string> {
   const cache = (globalThis.caches as unknown as { default?: Cache } | undefined)?.default;
   const request = new Request(url, {
@@ -14,7 +16,7 @@ export async function fetchText(url: string, ttlSeconds: number): Promise<string
     if (cached) return cached.text();
   }
 
-  const response = await fetch(request);
+  const response = await fetch(request, { signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS) });
   if (!response.ok) {
     throw new Error(`Upstream ${url} returned ${response.status}`);
   }

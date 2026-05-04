@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import type { Env } from "./types";
-import { fail, notFound, ok } from "./utils/api";
+import { fail, notFound, ok, preflight } from "./utils/api";
 import { getCharacterById, getCharacters, getTodayBirthdays } from "./services/characters";
 import { getEventById, getEvents } from "./services/events";
 import { getMusic, getMusicById } from "./services/music";
@@ -9,6 +9,8 @@ import { assertCardGame } from "./adapters/schoolidoSif";
 import { getRandomCard } from "./services/cards";
 
 export const app = new Hono<{ Bindings: Env }>();
+
+app.options("*", () => preflight());
 
 app.get("/", (c) =>
   ok({
@@ -102,5 +104,6 @@ app.get("/v1/cards/random", async (c) => {
 app.notFound(() => notFound());
 
 app.onError((error) => {
-  return fail(500, "INTERNAL_ERROR", error.message);
+  console.error("[app] unhandled error", error);
+  return fail(500, "INTERNAL_ERROR", "服务器内部错误");
 });

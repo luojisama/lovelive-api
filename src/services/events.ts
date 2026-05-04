@@ -51,7 +51,8 @@ export async function getEvents(env: Env, query: EventQuery = {}, forceRefresh =
       const envelope = await writeCached(env, CACHE_KEY, data, TTL_SECONDS, "live");
       const filtered = filterEvents(data, query);
       return { data: filtered, meta: { count: filtered.length, source: envelope.source, refreshedAt: envelope.refreshedAt, upstreamMode: mode } };
-    } catch {
+    } catch (error) {
+      console.warn("[events] upstream refresh failed", error);
       const fallback = cached?.data ?? (fixtureEvents as EventItem[]);
       const filtered = filterEvents(fallback, query);
       return {
