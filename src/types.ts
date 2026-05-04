@@ -96,4 +96,28 @@ export interface DataResult<T> {
   meta: ApiMeta;
 }
 
-export type CardGame = "sif" | "sifas" | "sif2";
+export type CardGame = "sif" | "sif2";
+
+export interface CardImages {
+  card?: string;
+  idolized?: string;
+  icon?: string;
+  iconIdolized?: string;
+  transparent?: string;
+  transparentIdolized?: string;
+}
+
+export interface CardItem {
+  id: string;
+  game: CardGame;
+  title?: string;
+  character?: string;
+  characterJa?: string;
+  rarity?: string;
+  attribute?: string;
+  collection?: string;
+  releaseDate?: string;
+  images: CardImages;
+  source: string;
+  sourceUrl: string;
+}

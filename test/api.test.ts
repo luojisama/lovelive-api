@@ -128,10 +128,36 @@ describe("api routes", () => {
     }
   });
 
-  it("returns reserved card endpoint as 501", async () => {
+  it("returns fixture random cards for SIF and SIF2", async () => {
+    const sif = await app.request("/v1/cards/random?game=sif&rarity=SR", {}, createTestEnv());
+    expect(sif.status).toBe(200);
+    const sifJson = await sif.json() as { data: { game: string; source: string; images: { card?: string } } };
+    expect(sifJson.data.game).toBe("sif");
+    expect(sifJson.data.source).toBe("schoolido-api");
+    expect(sifJson.data.images.card).toContain("schoolido");
+
+    const sif2 = await app.request("/v1/cards/random?game=sif2&rarity=UR", {}, createTestEnv());
+    expect(sif2.status).toBe(200);
+    const sif2Json = await sif2.json() as { data: { game: string; source: string; images: { card?: string } } };
+    expect(sif2Json.data.game).toBe("sif2");
+    expect(sif2Json.data.source).toBe("idol-story-sif2-html");
+    expect(sif2Json.data.images.card).toContain("idol.st");
+  });
+
+  it("rejects removed SIFAS card game", async () => {
     const response = await app.request("/v1/cards/random?game=sif2", {}, createTestEnv());
-    expect(response.status).toBe(501);
+    expect(response.status).toBe(200);
+    const removed = await app.request("/v1/cards/random?game=sifas", {}, createTestEnv());
+    expect(removed.status).toBe(400);
+    const json = await removed.json() as { error: { code: string; message: string } };
+    expect(json.error.code).toBe("INVALID_GAME");
+    expect(json.error.message).toContain("sif 或 sif2");
+  });
+
+  it("rejects missing card game", async () => {
+    const response = await app.request("/v1/cards/random", {}, createTestEnv());
+    expect(response.status).toBe(400);
     const json = await response.json() as { error: { code: string } };
-    expect(json.error.code).toBe("NOT_IMPLEMENTED");
+    expect(json.error.code).toBe("INVALID_GAME");
   });
 });

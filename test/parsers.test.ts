@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { parseLlchCvToChinaHtml } from "../src/adapters/llchCvToChina";
 import { parseLlchTimelineHtml } from "../src/adapters/llchTimeline";
+import { parseIdolStoryMaxPage, parseIdolStorySif2Cards } from "../src/adapters/idolStorySif2";
 import { parseMoegirlCharacterPage } from "../src/adapters/moegirlCharacters";
 import { parseLegacyOfficialMusicPage, parseOfficialMusicDetail } from "../src/adapters/officialMusic";
 import { parseOfficialScheduleHtml } from "../src/adapters/officialSchedule";
@@ -221,5 +222,41 @@ describe("music parsing", () => {
     expect(tracks.map((track) => track.title)).toEqual(["Future Parade", "Level Oops! Adventures"]);
     expect(tracks[0].artist).toBe("虹ヶ咲学園スクールアイドル同好会");
     expect(tracks[0].releaseDate).toBe("2022-07-27");
+  });
+});
+
+describe("card parsing", () => {
+  it("parses Idol Story SIF2 card list html", () => {
+    const html = `
+      <div class="col-md-4" data-item="SIF2/card" data-item-id="605">
+        <a href="/SIF2/card/605/UR-Shizuku-Osaka-Cool-We-Are-Heroes/" data-ajax-url="/ajax/SIF2/card/605/" data-ajax-title="UR Shizuku Osaka Cool 「We Are Heroes ☆」">
+          <img src="https://i.idol.st/u/sif2/card/art/605-normal.png" class="sif2-card-image normal">
+          <img src="https://i.idol.st/u/sif2/card/art/605-idolized.png" class="sif2-card-image idolized">
+        </a>
+      </div>
+      <a href="?page=49">Last</a>
+    `;
+    const cards = parseIdolStorySif2Cards(html);
+    expect(cards).toHaveLength(1);
+    expect(cards[0].id).toBe("sif2-605");
+    expect(cards[0].rarity).toBe("UR");
+    expect(cards[0].character).toBe("Shizuku Osaka");
+    expect(cards[0].attribute).toBe("Cool");
+    expect(cards[0].title).toBe("We Are Heroes ☆");
+    expect(cards[0].images.idolized).toContain("605-idolized.png");
+    expect(parseIdolStoryMaxPage(html)).toBe(49);
+  });
+
+  it("parses Idol Story SIF2 Japanese card titles", () => {
+    const cards = parseIdolStorySif2Cards(`
+      <div class="col-md-4" data-item="SIF2/card" data-item-id="490">
+        <a href="/SIF2/card/490/UR-Ren-Hazuki-Smile/" data-ajax-url="/ajax/SIF2/card/490/" data-ajax-title="UR 葉月 恋 スマイル 「苺スイーツビュッフェ」">
+          <img src="https://i.idol.st/u/sif2/card/art/490-normal.png" class="sif2-card-image normal">
+        </a>
+      </div>
+    `);
+    expect(cards[0].character).toBe("葉月 恋");
+    expect(cards[0].attribute).toBe("Smile");
+    expect(cards[0].title).toBe("苺スイーツビュッフェ");
   });
 });

@@ -1,0 +1,41 @@
+{
+  "sif": [
+    {
+      "id": "sif-fixture-688",
+      "game": "sif",
+      "title": "Minami Kotori Kunoichi",
+      "character": "Minami Kotori",
+      "characterJa": "南 ことり",
+      "rarity": "SR",
+      "attribute": "Smile",
+      "collection": "Kunoichi",
+      "releaseDate": "2015-09-15",
+      "images": {
+        "card": "https://i.schoolido.lu/c/688Kotori.png",
+        "idolized": "https://i.schoolido.lu/c/688idolizedKotori.png",
+        "icon": "https://i.schoolido.lu/c/688RoundKotori.png",
+        "iconIdolized": "https://i.schoolido.lu/c/688RoundIdolizedKotori.png",
+        "transparent": "https://i.schoolido.lu/cards/transparent/688Transparent.png",
+        "transparentIdolized": "https://i.schoolido.lu/cards/transparent/688idolizedTransparent.png"
+      },
+      "source": "schoolido-api",
+      "sourceUrl": "https://schoolido.lu/cards/688/SR-Minami-Kotori-Kunoichi-Smile/"
+    }
+  ],
+  "sif2": [
+    {
+      "id": "sif2-fixture-605",
+      "game": "sif2",
+      "title": "We Are Heroes ☆",
+      "character": "Shizuku Osaka",
+      "rarity": "UR",
+      "attribute": "Cool",
+      "images": {
+        "card": "https://i.idol.st/u/sif2/card/art/605UR-Osaka-Shizuku-Cool-ふたりはヒーロー-x4d2vw.png",
+        "idolized": "https://i.idol.st/u/sif2/card/art/605UR-Osaka-Shizuku-Cool-ふたりはヒーロー-FxptcL.png"
+      },
+      "source": "idol-story-sif2-html",
+      "sourceUrl": "https://idol.st/SIF2/card/605/UR-Shizuku-Osaka-Cool-We-Are-Heroes/"
+    }
+  ]
+}

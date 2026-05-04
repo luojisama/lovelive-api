@@ -6,7 +6,7 @@ import { getEventById, getEvents } from "./services/events";
 import { getMusic, getMusicById } from "./services/music";
 import { proxyMusicCover, withMusicCoverProxy } from "./services/images";
 import { assertCardGame } from "./adapters/schoolidoSif";
-import { reservedCardMessage } from "./services/cards";
+import { getRandomCard } from "./services/cards";
 
 export const app = new Hono<{ Bindings: Env }>();
 
@@ -85,10 +85,15 @@ app.get("/v1/music/:id", async (c) => {
 
 app.get("/v1/images/music-cover", (c) => proxyMusicCover(c.req.raw));
 
-app.get("/v1/cards/random", (c) => {
+app.get("/v1/cards/random", async (c) => {
   try {
     const game = assertCardGame(c.req.query("game"));
-    return fail(501, "NOT_IMPLEMENTED", reservedCardMessage(game));
+    const result = await getRandomCard(c.env, {
+      game,
+      character: c.req.query("character"),
+      rarity: c.req.query("rarity")
+    });
+    return ok(result.data, result.meta);
   } catch (error) {
     return fail(400, "INVALID_GAME", error instanceof Error ? error.message : "game 查询参数无效");
   }

@@ -1,6 +1,6 @@
 # LoveLive 聚合 API
 
-这是一个可部署到 Cloudflare Workers 的 LoveLive 聚合 API，提供角色资料、生日、活动、音乐查询，以及预留的游戏卡面接口。
+这是一个可部署到 Cloudflare Workers 的 LoveLive 聚合 API，提供角色资料、生日、活动、音乐查询，以及 SIF/SIF2 随机卡面接口。
 
 ## 本地开发
 
@@ -45,7 +45,7 @@ pnpm seed:local
 | `GET /v1/events` | 查官方/补充源聚合活动 |
 | `GET /v1/music` | 查官方音乐、封面、发售日、所属专辑 |
 | `GET /v1/images/music-cover` | 音乐封面代理，自动回落官方备用源 |
-| `GET /v1/cards/random` | 预留 SIF/SIFAS/SIF2 随机卡面 |
+| `GET /v1/cards/random` | 随机获取 SIF 或 SIF2 卡面 |
 
 ### `GET /v1/characters`
 
@@ -155,15 +155,25 @@ pnpm seed:local
 
 ### `GET /v1/cards/random`
 
-预留随机卡面接口。本版本不会返回伪数据；未接入的游戏返回 `501 NOT_IMPLEMENTED`。
+随机获取一张卡面。成功时返回规范化卡片信息和图片 URL。
 
 查询参数：
 
-- `game`：必填，取值 `sif`、`sifas`、`sif2`。
-- `character`：预留角色筛选参数。
-- `rarity`：预留稀有度筛选参数。
+- `game`：必填，取值 `sif` 或 `sif2`。
+- `character`：按角色名筛选。SIF 使用 School Idol Tomodachi API 的 `name` 参数；SIF2 使用 Idol Story 页面搜索。
+- `rarity`：按稀有度筛选，常用值为 `R`、`SR`、`UR`。
 
-卡面接口在 `0.1` 版本只预留接口形状；在稳定卡面源适配器启用前，会返回 `501 NOT_IMPLEMENTED`。
+`sifas` / `as` 已从接口中移除；传入后会返回 `400 INVALID_GAME`。
+
+卡片字段说明：
+
+- `game`：`sif` 或 `sif2`。
+- `title`：卡片标题或系列名。
+- `character` / `characterJa`：角色名。
+- `rarity` / `attribute`：稀有度和属性。
+- `images.card` / `images.idolized`：普通卡面和觉醒卡面。
+- `images.icon` / `images.transparent`：来源存在时返回图标或透明卡面。
+- `source` / `sourceUrl`：数据来源和原始详情页。
 
 ## 示例请求
 
@@ -188,6 +198,7 @@ http://llapi.shiro.team/v1/music?q=愛してるばんざーい
 http://llapi.shiro.team/v1/music?q=Aspire
 http://llapi.shiro.team/v1/music?series=蓮ノ空&from=2025-01-01
 http://llapi.shiro.team/v1/images/music-cover?albumTitle=Aspire&releaseDate=2025-05-28
+http://llapi.shiro.team/v1/cards/random?game=sif&character=Kotori&rarity=SR
 http://llapi.shiro.team/v1/cards/random?game=sif2
 ```
 
@@ -213,8 +224,8 @@ http://llapi.shiro.team/v1/cards/random?game=sif2
 - 活动：LoveLive 官方日程和新闻、LL-CH 近期线上活动时间线、LL-CH 声优访华活动页，RSSHub 路由作为备用结构化源。
 - 音乐：μ's 音乃木坂官方 release 页、Aqours 浦之星官方 CD 页、虹咲官方 CD 页、Liella! 官方音乐页、蓮ノ空官方音乐页。返回曲目时以官方页面的发售日、封面、收录曲为准。
 - 音乐封面备用源：Bandai Namco Music Live Catalog。当前 Liella! 官方 `image.php` 在部分场景会返回维护页 HTML；封面代理会自动用 BNML Catalog 的官方封面补齐。
-- SIF 卡面候选源：School Idol Tomodachi。
-- SIFAS/SIF2 卡面候选源：Idol Story。
+- SIF 卡面：School Idol Tomodachi 公开 API，`https://schoolido.lu/api/cards/`，返回 JSON，包含普通/觉醒卡面、圆形头像、透明卡面、角色、稀有度、属性等字段。
+- SIF2 卡面：Idol Story 的 SIF2 卡片页，`https://idol.st/SIF2/cards/`。目前未找到稳定公开 REST API；项目采用 HTML 解析作为 live 源，并保留 `mikan` 离线导入作为后续可选方案。
 
 ## 部署
 
